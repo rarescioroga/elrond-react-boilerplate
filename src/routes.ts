@@ -1,15 +1,22 @@
 import CollectionList from './features/collection/CollectionList';
+import AuthButton from './common/Elrond/AuthButton';
 
 export const routes = [
     {
         path: '/',
         component: CollectionList,
-        authenticatedRoute: true,
+        authenticatedRoute: false,
+    },
+    {
+        path: '/extension-login',
+        component: AuthButton,
+        authenticatedRoute: false,
     },
 ];
 
-export const routNames = {
+export const routeNames = {
     home: '/',
+    extensionLogin: '/extension-login',
 };
 
 const mappedRoutes = routes.map((route) => {

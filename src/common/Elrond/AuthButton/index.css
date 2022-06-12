@@ -1,0 +1,11 @@
+.override-button {
+    height: 32px;
+    width: 180px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background-color: #DF6348 !important;
+    border: none !important;
+}
+
+.override-button > span {
+}

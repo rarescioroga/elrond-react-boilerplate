@@ -11,3 +11,21 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+@font-face {
+  font-family: 'RedHatMono-Light';
+  src: local('RedHatMono-Light'), url(./fonts/RedHatMono-Light.ttf) format('truetype');
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: 'RedHatMono-Regular';
+  src: local('RedHatMono-Regular'), url(./fonts/RedHatMono-Regular.ttf) format('truetype');
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: 'RedHatMono-Bold';
+  src: local('RedHatMono-Bold'), url(./fonts/RedHatMono-Bold.ttf) format('truetype');
+  font-weight: bold;
+}
