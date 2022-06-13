@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { collectionSlice } from './features/collection/collectionSlice';
+import liveCollectionsReducer from './features/collection/slices/liveCollectionsSlice';
+import availableCollectionsReducer from './features/collection/slices/availableCollectionsSlice';
 
 const store = configureStore({
     reducer: {
-        collections: collectionSlice,
+        liveCollections: liveCollectionsReducer,
+        availableCollections: availableCollectionsReducer,
     },
 });
 
