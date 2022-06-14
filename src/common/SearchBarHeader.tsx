@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import logo from '../assets/Logo.png';
 import SearchBar from './components/SearchBar';
 import AuthButton from './Elrond/AuthButton';
+import useSearchFilter from '../redux/useSearchFilter';
 
 const Wrapper = styled.div`
     display: flex;
@@ -18,7 +19,7 @@ const Logo = styled.img`
 `;
 
 const SearchBarHeader = () => {
-    const [searchFilter, setSearchFilter] = useState('');
+    const { setSearchFilter, searchFilter } = useSearchFilter();
 
     return (
         <Wrapper>

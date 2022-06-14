@@ -1,10 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { loginServices, useGetAccountInfo, useGetLoginInfo } from '@elrondnetwork/dapp-core';
-import { MediumLargeRegularText } from '@haos-labs/tesserae-utils';
+import { MediumLargeRegularText, MainButton } from '@haos-labs/tesserae-utils';
 
 import accountPlaceholder from '../../../assets/account-placeholder.png';
-import MainButton from '../../components/MainButton';
 import { colorTheme } from '../../../constants/colors';
 import { shortenWalletAddress } from '../../../utils';
 import AccountBalancePopup from '../../AccountBalancePopup';
@@ -81,11 +80,3 @@ const AuthButton: React.FC = () => {
 };
 
 export default AuthButton;
-
-// return (
-//     <DappUI.ExtensionLoginButton
-//         buttonClassName="override-button"
-//         loginButtonText={'Connect Wallet'}
-//         shouldRenderDefaultButton={false}
-//     />
-// );
