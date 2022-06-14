@@ -1,7 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { NftCard, TitleText } from '@haos-labs/tesserae-utils';
+import { NftCard, TitleText, SmallBoldText, SmallRegularText, MediumLargeBoldText } from '@haos-labs/tesserae-utils';
+import { isCollectionFullyMinted } from '../../utils';
+import { colorTheme } from '../../constants/colors';
 
 type Props = {
     collections: any[];
@@ -25,7 +27,36 @@ const CollectionsRow = styled.div`
     overflow: initial;
 `;
 
+const PriceContainer = styled.div`
+    display: flex;
+    flex: 1;
+    width: calc(100% - 20px);
+    padding: 12px;
+    align-items: center;
+    justify-content: space-between;
+    background-color: ${colorTheme.LIGHT_GREY};
+    border-radius: 10px;
+`;
+
+const LeftContentWrapper = styled.div`
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+`;
+
+const RightContentWrapper = styled(LeftContentWrapper)`
+    align-items: flex-end;
+`;
+
+const FlexRow = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+`;
+
 const CollectionsGrid: React.FC<Props> = ({ collections, title }) => {
+    console.log('LOGGER collections ------------------->> ', collections);
+
     return (
         <Wrapper>
             {title && <TitleText extraCss="margin: 56px 0 49px 0;">{title}</TitleText>}
@@ -42,6 +73,23 @@ const CollectionsGrid: React.FC<Props> = ({ collections, title }) => {
                         }
                         totalItemsCount={Number(collection.amount_of_tokens_total)}
                         wrapperStyle={{ marginRight: 26, marginBottom: 26 }}
+                        BottomContent={
+                            isCollectionFullyMinted(collection) && (
+                                <PriceContainer>
+                                    <LeftContentWrapper>
+                                        <SmallRegularText color={colorTheme.GREY}>Floor Price</SmallRegularText>
+                                        <MediumLargeBoldText color={colorTheme.ORANGE}>2 EGLD</MediumLargeBoldText>
+                                    </LeftContentWrapper>
+                                    <RightContentWrapper>
+                                        <SmallRegularText color={colorTheme.GREY}>Listed</SmallRegularText>
+                                        <FlexRow>
+                                            <SmallBoldText color={colorTheme.ORANGE}>500</SmallBoldText>
+                                            <SmallBoldText color={colorTheme.GREY}>/1000</SmallBoldText>
+                                        </FlexRow>
+                                    </RightContentWrapper>
+                                </PriceContainer>
+                            )
+                        }
                     />
                 ))}
             </CollectionsRow>
