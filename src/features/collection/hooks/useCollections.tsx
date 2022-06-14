@@ -23,13 +23,13 @@ const useCollections = () => {
         if (isLiveCollectionFetchSuccess) {
             dispatch(setLiveCollections(liveCollectionsData || []));
         }
-    }, [liveCollectionsData]);
+    }, [liveCollectionsData, isLiveCollectionFetchSuccess]);
 
     useEffect(() => {
         if (isAvailableCollectionFetchSuccess) {
             dispatch(setAvailableCollections(availableCollectionsData || []));
         }
-    }, [liveCollectionsData]);
+    }, [liveCollectionsData, isAvailableCollectionFetchSuccess]);
 
     return {
         liveCollections,

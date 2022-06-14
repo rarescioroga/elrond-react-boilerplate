@@ -5,7 +5,7 @@
   "dependencies": {
     "@elrondnetwork/dapp-core": "2.0.0-alpha.2",
     "@elrondnetwork/erdjs": "^10.2.5",
-    "@haos-labs/tesserae-utils": "1.0.6",
+    "@haos-labs/tesserae-utils": "1.0.8",
     "@reduxjs/toolkit": "^1.8.2",
     "react": "18.1.0",
     "react-dom": "^18.1.0",

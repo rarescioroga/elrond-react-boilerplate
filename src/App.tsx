@@ -10,7 +10,13 @@ const { NotificationModal, TransactionsToastList, SignTransactionsModals } = Dap
 
 const environment = process.env.REACT_APP_ENVIRONMENT;
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+    defaultOptions: {
+        queries: {
+            refetchOnWindowFocus: false,
+        },
+    },
+});
 
 const App = () => {
     return (

@@ -18,6 +18,7 @@ const Wrapper = styled.div`
     border-radius: 13px;
     box-shadow: 0 2px 43px 0 rgba(181, 181, 181, 0.36);
     cursor: default;
+    z-index: 2;
 `;
 
 const Divider = styled.div`

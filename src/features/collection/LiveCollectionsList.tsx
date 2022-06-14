@@ -8,14 +8,19 @@ const Wrapper = styled.div`
     flex-direction: column;
     align-items: flex-start;
     width: 100%;
+    padding: 0 40px;
+    margin: 0 -40px;
 `;
 
 const CollectionsRow = styled.div`
     display: flex;
     flex-direction: row;
+    flex-wrap: nowrap;
     align-items: center;
-    overflow-x: scroll;
-    overflow: initial;
+    width: inherit;
+    overflow-y: scroll;
+    padding: 40px;
+    margin: -40px;
 `;
 
 const LiveCollectionsList: React.FC = () => {
@@ -23,7 +28,7 @@ const LiveCollectionsList: React.FC = () => {
 
     return (
         <Wrapper>
-            <TitleText>Live Collections</TitleText>
+            <TitleText extraCss="margin: 56px 0 49px 0;">Live Collections</TitleText>
             <CollectionsRow>
                 {liveCollections.map((collection: any, index: any) => (
                     <NftCard
@@ -36,7 +41,7 @@ const LiveCollectionsList: React.FC = () => {
                             Number(collection.amount_of_tokens_total) - Number(collection.minted_indexes_total)
                         }
                         totalItemsCount={Number(collection.amount_of_tokens_total)}
-                        wrapperStyle={{ marginRight: 26 }}
+                        wrapperStyle={{ marginRight: 26, minWidth: 325 }}
                     />
                 ))}
             </CollectionsRow>

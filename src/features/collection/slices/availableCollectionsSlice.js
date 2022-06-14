@@ -9,7 +9,6 @@ export const availableCollectionsSlice = createSlice({
     },
     reducers: {
         setAvailableCollections: (state, action) => {
-            console.log('LOGGER action.payload ------------------->> ', action.payload);
             state.collections = action.payload;
         },
     },
