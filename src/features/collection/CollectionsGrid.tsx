@@ -55,8 +55,6 @@ const FlexRow = styled.div`
 `;
 
 const CollectionsGrid: React.FC<Props> = ({ collections, title }) => {
-    console.log('LOGGER collections ------------------->> ', collections);
-
     return (
         <Wrapper>
             {title && <TitleText extraCss="margin: 56px 0 49px 0;">{title}</TitleText>}
