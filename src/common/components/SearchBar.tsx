@@ -6,7 +6,7 @@ import { colorTheme } from '../../constants/colors';
 
 type Props = {
     value: string;
-    setValue: Dispatch<SetStateAction<string>>;
+    setValue: (text: string) => { payload: any; type: string };
     placeholder?: string;
 };
 

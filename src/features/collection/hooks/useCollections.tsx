@@ -5,11 +5,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAvailableCollections, getLiveCollections } from '../api';
 import { selectLiveCollections, setLiveCollections } from '../slices/liveCollectionsSlice';
 import { selectAvailableCollections, setAvailableCollections } from '../slices/availableCollectionsSlice';
+import useSearchFilter from '../../../redux/useSearchFilter';
 
 const useCollections = () => {
+    const { searchFilter } = useSearchFilter();
+    const dispatch = useDispatch();
     const liveCollections = useSelector(selectLiveCollections);
     const availableCollections = useSelector(selectAvailableCollections);
-    const dispatch = useDispatch();
+    const allFilteredCollections = [...liveCollections, ...availableCollections].filter(
+        (collection) =>
+            collection.token_name.toLowerCase().includes(searchFilter.toLowerCase()) ||
+            collection.shop_name.toLowerCase().includes(searchFilter.toLowerCase()),
+    );
+
     const { isSuccess: isLiveCollectionFetchSuccess, data: liveCollectionsData } = useQuery(
         'liveCollections',
         getLiveCollections,
@@ -34,6 +42,7 @@ const useCollections = () => {
     return {
         liveCollections,
         availableCollections,
+        allFilteredCollections,
     };
 };
 

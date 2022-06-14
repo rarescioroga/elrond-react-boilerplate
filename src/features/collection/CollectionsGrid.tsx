@@ -2,7 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { NftCard, TitleText } from '@haos-labs/tesserae-utils';
-import useCollections from './hooks/useCollections';
+
+type Props = {
+    collections: any[];
+    title?: string;
+};
 
 const Wrapper = styled.div`
     display: flex;
@@ -21,14 +25,12 @@ const CollectionsRow = styled.div`
     overflow: initial;
 `;
 
-const AvailableCollections: React.FC = () => {
-    const { availableCollections } = useCollections();
-
+const CollectionsGrid: React.FC<Props> = ({ collections, title }) => {
     return (
         <Wrapper>
-            <TitleText extraCss="margin: 56px 0 49px 0;">Available Collections</TitleText>
+            {title && <TitleText extraCss="margin: 56px 0 49px 0;">{title}</TitleText>}
             <CollectionsRow>
-                {availableCollections.map((collection: any, index: any) => (
+                {collections.map((collection: any, index: any) => (
                     <NftCard
                         key={`live-collection-${index}`}
                         imageUrl={`https://devnet-media.elrond.com/nfts/asset/${collection.image_base_cid}/1.png`}
@@ -47,4 +49,4 @@ const AvailableCollections: React.FC = () => {
     );
 };
 
-export default AvailableCollections;
+export default CollectionsGrid;
