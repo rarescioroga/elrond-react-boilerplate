@@ -1,28 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
+import { MediumRegularText } from '@haos-labs/tesserae-utils';
 
-import SearchBarHeader from '../../common/SearchBarHeader';
 import Banner from '../../common/Banner';
 import LiveCollectionsList from './LiveCollectionsList';
 import CollectionsGrid from './common/CollectionsGrid';
-import { MediumRegularText } from '@haos-labs/tesserae-utils';
-import { colorTheme } from '../../constants/colors';
 import useSearchFilter from '../../redux/useSearchFilter';
 import useCollections from './hooks/useCollections';
-
-const Wrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    align-items: center;
-    width: 100vw;
-`;
-
-const HeaderWrapper = styled.div`
-    width: calc(100% - 64px);
-    max-width: 1500px;
-    margin: 39px 32px 0 32px;
-`;
+import { colorTheme } from '../../constants/colors';
+import { ScreenWrapper } from '../../common/styles';
 
 const MainContentWrapper = styled.div`
     width: calc(100% - 300px);
@@ -35,10 +21,7 @@ const Homepage: React.FC = () => {
     const { availableCollections, allFilteredCollections } = useCollections();
 
     return (
-        <Wrapper>
-            <HeaderWrapper>
-                <SearchBarHeader />
-            </HeaderWrapper>
+        <ScreenWrapper>
             <MainContentWrapper>
                 <Banner
                     imageUrl={'https://www.tesla.com/sites/default/files/images/roadster/roadster-social.jpg'}
@@ -60,7 +43,7 @@ const Homepage: React.FC = () => {
                     culpa qui officia deserunt mollit anim id est laborum.
                 </MediumRegularText>
             </MainContentWrapper>
-        </Wrapper>
+        </ScreenWrapper>
     );
 };
 

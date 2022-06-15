@@ -1,5 +1,6 @@
 import Homepage from './features/collection/Homepage';
 import MyCollections from './features/collection/MyCollections';
+import CollectionDetails from './features/collection/CollectionDetails';
 
 export const routes = [
     {
@@ -12,11 +13,17 @@ export const routes = [
         component: MyCollections,
         authenticatedRoute: false,
     },
+    {
+        path: '/collection/:collectionId',
+        component: CollectionDetails,
+        authenticatedRoute: false,
+    },
 ];
 
 export const routeNames = {
     home: '/',
     myCollections: '/my-collections',
+    collectionDetail: '/collection/:collectionId',
 };
 
 const mappedRoutes = routes.map((route) => {

@@ -1,28 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import SearchBarHeader from '../../common/SearchBarHeader';
-import Banner from '../../common/Banner';
-import LiveCollectionsList from './LiveCollectionsList';
 import CollectionsGrid from './common/CollectionsGrid';
+import useCollections from './hooks/useCollections';
 import { MediumRegularText } from '@haos-labs/tesserae-utils';
 import { colorTheme } from '../../constants/colors';
-import useSearchFilter from '../../redux/useSearchFilter';
-import useCollections from './hooks/useCollections';
-
-const Wrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    align-items: center;
-    width: 100vw;
-`;
-
-const HeaderWrapper = styled.div`
-    width: calc(100% - 64px);
-    max-width: 1500px;
-    margin: 39px 32px 0 32px;
-`;
+import { ScreenWrapper } from '../../common/styles';
 
 const MainContentWrapper = styled.div`
     width: calc(100% - 300px);
@@ -34,10 +17,7 @@ const MyCollections: React.FC = () => {
     const { allFilteredCollections } = useCollections();
 
     return (
-        <Wrapper>
-            <HeaderWrapper>
-                <SearchBarHeader />
-            </HeaderWrapper>
+        <ScreenWrapper>
             <MainContentWrapper>
                 <CollectionsGrid collections={allFilteredCollections} title="My Collections" />
                 <MediumRegularText color={colorTheme.GREY} extraCss="text-align: center; margin: 128px 64px 0;">
@@ -48,7 +28,7 @@ const MyCollections: React.FC = () => {
                     culpa qui officia deserunt mollit anim id est laborum.
                 </MediumRegularText>
             </MainContentWrapper>
-        </Wrapper>
+        </ScreenWrapper>
     );
 };
 

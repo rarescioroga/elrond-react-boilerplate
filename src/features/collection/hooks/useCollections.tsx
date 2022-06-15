@@ -3,8 +3,8 @@ import { useQuery } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { getAvailableCollections, getLiveCollections } from '../api';
-import { selectLiveCollections, setLiveCollections } from '../slices/liveCollectionsSlice';
-import { selectAvailableCollections, setAvailableCollections } from '../slices/availableCollectionsSlice';
+import { selectLiveCollections, setLiveCollections } from '../reduxSlices/liveCollectionsSlice';
+import { selectAvailableCollections, setAvailableCollections } from '../reduxSlices/availableCollectionsSlice';
 import useSearchFilter from '../../../redux/useSearchFilter';
 
 const useCollections = () => {
@@ -12,7 +12,8 @@ const useCollections = () => {
     const dispatch = useDispatch();
     const liveCollections = useSelector(selectLiveCollections);
     const availableCollections = useSelector(selectAvailableCollections);
-    const allFilteredCollections = [...liveCollections, ...availableCollections].filter(
+    const allCollections = [...liveCollections, ...availableCollections];
+    const allFilteredCollections = allCollections.filter(
         (collection) =>
             collection.token_name.toLowerCase().includes(searchFilter.toLowerCase()) ||
             collection.shop_name.toLowerCase().includes(searchFilter.toLowerCase()),
@@ -26,6 +27,8 @@ const useCollections = () => {
         'availableCollections',
         getAvailableCollections,
     );
+
+    const getCollectionById = (id: string) => allCollections.find((collection) => collection.nft_token_id === id);
 
     useEffect(() => {
         if (isLiveCollectionFetchSuccess) {
@@ -42,7 +45,9 @@ const useCollections = () => {
     return {
         liveCollections,
         availableCollections,
+        allCollections,
         allFilteredCollections,
+        getCollectionById,
     };
 };
 

@@ -2,8 +2,12 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { DappProvider } from '@elrondnetwork/dapp-core';
 import { DappUI, AuthenticatedRoutesWrapper } from '@elrondnetwork/dapp-core';
-import { routeNames, routes } from './routes';
 import { QueryClient, QueryClientProvider } from 'react-query';
+
+import SearchBarHeader from './common/SearchBarHeader';
+import { routeNames, routes } from './routes';
+import { HeaderWrapper } from './common/styles';
+
 import '@elrondnetwork/dapp-core/dist/index.css';
 
 const { NotificationModal, TransactionsToastList, SignTransactionsModals } = DappUI;
@@ -27,6 +31,9 @@ const App = () => {
                         <TransactionsToastList />
                         <NotificationModal />
                         <SignTransactionsModals />
+                        <HeaderWrapper>
+                            <SearchBarHeader />
+                        </HeaderWrapper>
                         <Routes>
                             {routes.map((route: any, index: number) => (
                                 <Route path={route.path} key={'route-key-' + index} element={<route.component />} />
