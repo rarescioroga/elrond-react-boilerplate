@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { NftCard, TitleText, SmallBoldText, SmallRegularText, MediumLargeBoldText } from '@haos-labs/tesserae-utils';
-import { isCollectionFullyMinted } from '../../utils';
-import { colorTheme } from '../../constants/colors';
+import { isCollectionFullyMinted } from '../../../utils';
+import { colorTheme } from '../../../constants/colors';
 
 type Props = {
     collections: any[];
