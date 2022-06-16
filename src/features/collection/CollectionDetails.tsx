@@ -131,7 +131,6 @@ const CollectionDetails: React.FC = () => {
         }
     }, [collectionId, allCollections]);
 
-    console.log('LOGGER collection ------------------->> ', collection);
     if (!collection) {
         return null;
     }

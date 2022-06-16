@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import CollectionsGrid from './common/CollectionsGrid';
+import MyCollectionsGrid from './common/MyCollectionsGrid';
 import useCollections from './hooks/useCollections';
 import { MediumRegularText } from '@haos-labs/tesserae-utils';
 import { colorTheme } from '../../constants/colors';
@@ -14,12 +14,12 @@ const MainContentWrapper = styled.div`
 `;
 
 const MyCollections: React.FC = () => {
-    const { allFilteredCollections } = useCollections();
+    const { myCollections } = useCollections();
 
     return (
         <ScreenWrapper>
             <MainContentWrapper>
-                <CollectionsGrid collections={allFilteredCollections} title="My Collections" />
+                <MyCollectionsGrid collections={myCollections} title="My Collections" />
                 <MediumRegularText color={colorTheme.GREY} extraCss="text-align: center; margin: 128px 64px 0;">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
                     et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
