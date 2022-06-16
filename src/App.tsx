@@ -6,7 +6,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 
 import SearchBarHeader from './common/SearchBarHeader';
 import { routeNames, routes } from './routes';
-import { HeaderWrapper } from './common/styles';
+import { HeaderWrapper, ScreenWrapper, ComponentsWrapper } from './common/styles';
 
 import '@elrondnetwork/dapp-core/dist/index.css';
 
@@ -28,17 +28,25 @@ const App = () => {
             <DappProvider environment={environment}>
                 <BrowserRouter>
                     <AuthenticatedRoutesWrapper routes={routes} unlockRoute={routeNames.home}>
-                        <TransactionsToastList />
-                        <NotificationModal />
-                        <SignTransactionsModals />
-                        <HeaderWrapper>
-                            <SearchBarHeader />
-                        </HeaderWrapper>
-                        <Routes>
-                            {routes.map((route: any, index: number) => (
-                                <Route path={route.path} key={'route-key-' + index} element={<route.component />} />
-                            ))}
-                        </Routes>
+                        <ScreenWrapper>
+                            <TransactionsToastList />
+                            <NotificationModal />
+                            <SignTransactionsModals />
+                            <HeaderWrapper>
+                                <SearchBarHeader />
+                            </HeaderWrapper>
+                            <ComponentsWrapper>
+                                <Routes>
+                                    {routes.map((route: any, index: number) => (
+                                        <Route
+                                            path={route.path}
+                                            key={'route-key-' + index}
+                                            element={<route.component />}
+                                        />
+                                    ))}
+                                </Routes>
+                            </ComponentsWrapper>
+                        </ScreenWrapper>
                     </AuthenticatedRoutesWrapper>
                 </BrowserRouter>
             </DappProvider>

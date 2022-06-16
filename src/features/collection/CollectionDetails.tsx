@@ -39,13 +39,14 @@ const Container = styled(ScreenWrapper)`
 
 const ArrowIcon = styled.img<ArrowIconProps>`
     width: 10px;
+    padding: 12px;
     cursor: pointer;
     transition: all 1s;
-    -webkit-transition: all 1s;
-    -moz-transition: all 1s;
-    -ms-transition: all 1s;
-    -o-transition: all 1s;
-    transform: ${({ inverse }) => (inverse ? 'rotate(0deg) translateY(-10px)' : 'rotate(-180deg) translateY(10px)')};
+    -webkit-transition: all 0.6s;
+    -moz-transition: all 0.6s;
+    -ms-transition: all 0.6s;
+    -o-transition: all 0.6s;
+    transform: ${({ inverse }) => inverse && 'rotate(-180deg) translateY(-10px)'};
 `;
 
 const LeftContent = styled.div`

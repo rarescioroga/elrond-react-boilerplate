@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useGetLoginInfo } from '@elrondnetwork/dapp-core';
 import { MainButton } from '@haos-labs/tesserae-utils';
@@ -16,11 +16,12 @@ const Wrapper = styled.div`
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    width: 100%;
+    padding: 24px 0;
 `;
 
 const Logo = styled.img`
     width: 241px;
+    cursor: pointer;
 `;
 
 const buttonTheme = {
@@ -34,13 +35,18 @@ const SearchBarHeader = () => {
     const { pathname } = useLocation();
     const navigate = useNavigate();
     const isMyCollectionScreen = pathname === routeNames.myCollections;
+
     const onMyCollectionsButtonClick = () => {
         navigate(isMyCollectionScreen ? routeNames.home : routeNames.myCollections);
     };
 
+    const onLogoClick = () => {
+        navigate(routeNames.home);
+    };
+
     return (
         <Wrapper>
-            <Logo src={logo} />
+            <Logo src={logo} onClick={onLogoClick} />
             <SearchBar value={searchFilter} setValue={setSearchFilter} placeholder="Search collection" />
             {isLoggedIn && (
                 <MainButton
