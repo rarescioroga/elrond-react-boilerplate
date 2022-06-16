@@ -1,22 +1,29 @@
-import CollectionList from './features/collection/CollectionList';
-import AuthButton from './common/Elrond/AuthButton';
+import Homepage from './features/collection/Homepage';
+import MyCollections from './features/collection/MyCollections';
+import CollectionDetails from './features/collection/CollectionDetails';
 
 export const routes = [
     {
         path: '/',
-        component: CollectionList,
+        component: Homepage,
         authenticatedRoute: false,
     },
     {
-        path: '/extension-login',
-        component: AuthButton,
+        path: '/my-collections',
+        component: MyCollections,
+        authenticatedRoute: false,
+    },
+    {
+        path: '/collection/:collectionId',
+        component: CollectionDetails,
         authenticatedRoute: false,
     },
 ];
 
 export const routeNames = {
     home: '/',
-    extensionLogin: '/extension-login',
+    myCollections: '/my-collections',
+    collectionDetail: '/collection/:collectionId',
 };
 
 const mappedRoutes = routes.map((route) => {

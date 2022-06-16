@@ -2,8 +2,12 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { DappProvider } from '@elrondnetwork/dapp-core';
 import { DappUI, AuthenticatedRoutesWrapper } from '@elrondnetwork/dapp-core';
-import { routeNames, routes } from './routes';
 import { QueryClient, QueryClientProvider } from 'react-query';
+
+import SearchBarHeader from './common/SearchBarHeader';
+import { routeNames, routes } from './routes';
+import { HeaderWrapper, ScreenWrapper, ComponentsWrapper } from './common/styles';
+
 import '@elrondnetwork/dapp-core/dist/index.css';
 
 const { NotificationModal, TransactionsToastList, SignTransactionsModals } = DappUI;
@@ -24,14 +28,25 @@ const App = () => {
             <DappProvider environment={environment}>
                 <BrowserRouter>
                     <AuthenticatedRoutesWrapper routes={routes} unlockRoute={routeNames.home}>
-                        <TransactionsToastList />
-                        <NotificationModal />
-                        <SignTransactionsModals />
-                        <Routes>
-                            {routes.map((route: any, index: number) => (
-                                <Route path={route.path} key={'route-key-' + index} element={<route.component />} />
-                            ))}
-                        </Routes>
+                        <ScreenWrapper>
+                            <TransactionsToastList />
+                            <NotificationModal />
+                            <SignTransactionsModals />
+                            <HeaderWrapper>
+                                <SearchBarHeader />
+                            </HeaderWrapper>
+                            <ComponentsWrapper>
+                                <Routes>
+                                    {routes.map((route: any, index: number) => (
+                                        <Route
+                                            path={route.path}
+                                            key={'route-key-' + index}
+                                            element={<route.component />}
+                                        />
+                                    ))}
+                                </Routes>
+                            </ComponentsWrapper>
+                        </ScreenWrapper>
                     </AuthenticatedRoutesWrapper>
                 </BrowserRouter>
             </DappProvider>
