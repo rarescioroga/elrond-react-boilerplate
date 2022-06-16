@@ -5,15 +5,16 @@ import { useParams } from 'react-router-dom';
 import upArrowIcon from '../../assets/icons/up-arrow-icon.png';
 import useCollections from './hooks/useCollections';
 import { ScreenWrapper } from '../../common/styles';
-import { getCollectionImageSrc } from '../../utils';
+import { getCollectionImageSrc, isCollectionFullyMinted } from '../../utils';
 import {
-    ExtraLargeBoldText,
+    CollectionDescriptionContainer,
     MainButton,
     MediumLargeBoldText,
     MediumRegularText,
     SmallRegularText,
 } from '@haos-labs/tesserae-utils';
 import { colorTheme } from '../../constants/colors';
+import useShop from '../shop/hooks/useShop';
 
 interface ThemeProps {
     primary: string;
@@ -21,7 +22,7 @@ interface ThemeProps {
 }
 
 interface BenefitsContainerProps {
-    display: boolean;
+    showExtendedContainer: boolean;
 }
 
 interface ArrowIconProps {
@@ -59,14 +60,10 @@ const LeftContent = styled.div`
 const RightContent = styled(LeftContent)`
     flex: 2.43;
     margin: 0;
-    box-shadow: 0 2px 43px 0 rgba(181, 181, 181, 0.36);
-    padding: 38px 45px 45px 39px;
-    border-radius: 10px;
 `;
 
 const Image = styled.img`
     width: 100%;
-    aspect-ratio: 1 / 1;
     border-radius: 10px;
     object-fit: cover;
 `;
@@ -112,18 +109,26 @@ const BenefitsContainer = styled.div<BenefitsContainerProps>`
     -moz-transition: max-height 1s;
     -ms-transition: max-height 1s;
     -o-transition: max-height 1s;
-    max-height: ${({ display }) => (display ? 1000 : 0)}px;
+    max-height: ${({ showExtendedContainer }) => (showExtendedContainer ? 1000 : 0)}px;
 `;
+
+let theme = {
+    primary: colorTheme.ORANGE,
+    secondary: colorTheme.WHITE,
+};
 
 const CollectionDetails: React.FC = () => {
     const { collectionId } = useParams();
     const { getCollectionById, allCollections } = useCollections();
     const [collection, setCollection] = useState<any>(null);
     const [showBenefits, setShowBenefits] = useState<boolean>(false);
-    const theme = {
-        primary: '#FFE600',
-        secondary: '#000',
-    };
+    const { shopTheme } = useShop(collection?.shop_name);
+    const isMintDone = collection && isCollectionFullyMinted(collection);
+
+    console.log('LOGGER isMintDone ------------------->> ', isMintDone);
+    if (shopTheme) {
+        theme = shopTheme;
+    }
 
     useEffect(() => {
         if (collectionId) {
@@ -135,52 +140,64 @@ const CollectionDetails: React.FC = () => {
         return null;
     }
 
+    // TODO -> check for mint status and display nfts that are for sale here
+    // TODO -> create new route for the items of a user in a collection with a label to go to list the nft for sale
+
     return (
         <ScreenWrapper>
             <Container>
                 <LeftContent>
                     <Image src={getCollectionImageSrc(collection)} />
-                    <BuyButtonContainer {...theme}>
-                        <FlexColum>
-                            <SmallRegularText fontSize={12} color={colorTheme.GREY}>
-                                Item Price
-                            </SmallRegularText>
-                            <MediumLargeBoldText fontSize={20}>{Number(collection.selling_price)}</MediumLargeBoldText>
-                        </FlexColum>
-                        <MainButton theme={theme} onClick={() => console.log('Click')} inverse>
-                            Buy Now
-                        </MainButton>
-                    </BuyButtonContainer>
+                    {!isMintDone && (
+                        <BuyButtonContainer {...theme}>
+                            <FlexColum>
+                                <SmallRegularText fontSize={12} color={theme.secondary}>
+                                    Item Price
+                                </SmallRegularText>
+                                <MediumLargeBoldText fontSize={20} color={theme.secondary}>
+                                    {Number(collection.selling_price)}
+                                </MediumLargeBoldText>
+                            </FlexColum>
+
+                            <MainButton theme={theme} onClick={() => console.log('Click')} inverse>
+                                Buy Now
+                            </MainButton>
+                        </BuyButtonContainer>
+                    )}
                 </LeftContent>
                 <RightContent>
-                    <FlexColum style={{ marginBottom: 40 }}>
-                        <ExtraLargeBoldText fontSize={40}>{collection.token_name}</ExtraLargeBoldText>
-                        <MediumRegularText color={colorTheme.GREY}>By {collection.shop_name}</MediumRegularText>
-                    </FlexColum>
-                    <MediumLargeBoldText extraCss="margin-bottom: 12px">Description</MediumLargeBoldText>
-                    <MediumRegularText>{collection.description}</MediumRegularText>
-                    <Divider />
-                    <FlexRow>
-                        <MediumLargeBoldText extraCss="margin-bottom: 12px">Benefits</MediumLargeBoldText>
-                        <ArrowIcon
-                            src={upArrowIcon}
-                            onClick={() => setShowBenefits((val) => !val)}
-                            inverse={showBenefits}
-                        />
-                    </FlexRow>
-                    <BenefitsContainer display={showBenefits}>
-                        {showBenefits &&
-                            collection.benefits.map((benefit: any, index: any) => (
-                                <React.Fragment key={`benefit-${index}`}>
-                                    <MediumLargeBoldText extraCss="margin-bottom: 12px">
-                                        {benefit.name}
-                                    </MediumLargeBoldText>
-                                    <MediumRegularText extraCss="margin-bottom: 25px;">
-                                        {benefit.description}
-                                    </MediumRegularText>
-                                </React.Fragment>
-                            ))}
-                    </BenefitsContainer>
+                    <CollectionDescriptionContainer
+                        title={collection.token_name}
+                        subtitle={`By ${collection.shop_name}`}
+                        detailsTitle="Description"
+                        details={collection.description}
+                        logoSrc="https://i.pinimg.com/280x280_RS/81/a7/ce/81a7ce9d3bc250bd44fae2b7f188c685.jpg"
+                        showDivider
+                    >
+                        <>
+                            <FlexRow>
+                                <MediumLargeBoldText extraCss="margin-bottom: 12px">Benefits</MediumLargeBoldText>
+                                <ArrowIcon
+                                    src={upArrowIcon}
+                                    onClick={() => setShowBenefits((val) => !val)}
+                                    inverse={showBenefits}
+                                />
+                            </FlexRow>
+                            <BenefitsContainer showExtendedContainer={showBenefits}>
+                                {showBenefits &&
+                                    collection.benefits.map((benefit: any, index: any) => (
+                                        <React.Fragment key={`benefit-${index}`}>
+                                            <MediumLargeBoldText extraCss="margin-bottom: 12px">
+                                                {benefit.name}
+                                            </MediumLargeBoldText>
+                                            <MediumRegularText extraCss="margin-bottom: 25px;">
+                                                {benefit.description}
+                                            </MediumRegularText>
+                                        </React.Fragment>
+                                    ))}
+                            </BenefitsContainer>
+                        </>
+                    </CollectionDescriptionContainer>
                 </RightContent>
             </Container>
         </ScreenWrapper>

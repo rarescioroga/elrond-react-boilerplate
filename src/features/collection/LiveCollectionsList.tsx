@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import useCollections from './hooks/useCollections';
 import { NftCard, TitleText } from '@haos-labs/tesserae-utils';
 import { useNavigate } from 'react-router-dom';
-import { routeNames } from '../../routes';
 
 const Wrapper = styled.div`
     display: flex;
