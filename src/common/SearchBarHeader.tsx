@@ -7,7 +7,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import logo from '../assets/Logo.png';
 import SearchBar from './components/SearchBar';
 import AuthButton from './Elrond/AuthButton';
-import useSearchFilter from '../redux/useSearchFilter';
+import useSearchFilter from './redux/hooks/useSearchFilter';
 import { colorTheme } from '../constants/colors';
 import { routeNames } from '../routes';
 import useShop from '../features/shop/hooks/useShop';
@@ -57,7 +57,7 @@ const SearchBarHeader = () => {
                     theme={buttonTheme}
                     extraStyle={{ marginRight: 62 }}
                     onClick={onMyCollectionsButtonClick}
-                    inverse={!isMyCollectionScreen && !shopTheme}
+                    inverse={!isMyCollectionScreen}
                 >
                     My Collections
                 </MainButton>

@@ -1,11 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { NftCard, TitleText, SmallBoldText, SmallRegularText, MediumLargeBoldText } from '@haos-labs/tesserae-utils';
+import {
+    NftCard,
+    TitleText,
+    SmallBoldText,
+    SmallRegularText,
+    MediumLargeBoldText,
+    CollectionPriceContainer,
+} from '@haos-labs/tesserae-utils';
 
 import { isCollectionFullyMinted } from '../../../utils';
 import { colorTheme } from '../../../constants/colors';
-import { PriceContainer, LeftContentWrapper, RightContentWrapper } from '../../../common/styles/nftStyles';
+import { LeftContentWrapper, RightContentWrapper, CollectionsGridLayout } from '../../../common/styles/nftStyles';
 
 type Props = {
     collections: any[];
@@ -17,16 +24,6 @@ const Wrapper = styled.div`
     flex-direction: column;
     align-items: flex-start;
     width: 100%;
-`;
-
-const CollectionsRow = styled.div`
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    width: inherit;
-    overflow-x: scroll;
-    overflow: initial;
 `;
 
 const FlexRow = styled.div`
@@ -44,7 +41,7 @@ const CollectionsGrid: React.FC<Props> = ({ collections, title }) => {
     return (
         <Wrapper>
             {title && <TitleText extraCss="margin: 56px 0 49px 0;">{title}</TitleText>}
-            <CollectionsRow>
+            <CollectionsGridLayout>
                 {collections.map((collection: any, index: any) => (
                     <div onClick={() => goToCollectionDetails(collection)} key={`live-collection-${index}`}>
                         <NftCard
@@ -59,9 +56,12 @@ const CollectionsGrid: React.FC<Props> = ({ collections, title }) => {
                             totalItemsCount={Number(collection.amount_of_tokens_total)}
                             wrapperStyle={{ marginRight: 26, marginBottom: 26 }}
                             hoverAnimation
+                            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                            //@ts-ignore
+                            largerWidth
                             BottomContent={
                                 isCollectionFullyMinted(collection) && (
-                                    <PriceContainer>
+                                    <CollectionPriceContainer>
                                         <LeftContentWrapper>
                                             <SmallRegularText color={colorTheme.GREY}>Floor Price</SmallRegularText>
                                             <MediumLargeBoldText color={colorTheme.ORANGE}>2 EGLD</MediumLargeBoldText>
@@ -73,13 +73,13 @@ const CollectionsGrid: React.FC<Props> = ({ collections, title }) => {
                                                 <SmallBoldText color={colorTheme.GREY}>/1000</SmallBoldText>
                                             </FlexRow>
                                         </RightContentWrapper>
-                                    </PriceContainer>
+                                    </CollectionPriceContainer>
                                 )
                             }
                         />
                     </div>
                 ))}
-            </CollectionsRow>
+            </CollectionsGridLayout>
         </Wrapper>
     );
 };

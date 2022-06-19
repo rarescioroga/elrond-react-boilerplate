@@ -9,7 +9,7 @@ import { ScreenWrapper } from '../../common/styles';
 
 const MainContentWrapper = styled.div`
     width: calc(100% - 300px);
-    max-width: 1200px;
+    max-width: 1227px;
     margin: 39px 32px;
 `;
 

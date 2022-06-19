@@ -1,10 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { NftCard, TitleText, SmallRegularText, MediumLargeBoldText } from '@haos-labs/tesserae-utils';
+import {
+    NftCard,
+    TitleText,
+    SmallRegularText,
+    MediumLargeBoldText,
+    CollectionPriceContainer,
+} from '@haos-labs/tesserae-utils';
 
 import { colorTheme } from '../../../constants/colors';
-import { PriceContainer, LeftContentWrapper } from '../../../common/styles/nftStyles';
+import { LeftContentWrapper } from '../../../common/styles/nftStyles';
 
 type Props = {
     collections: any[];
@@ -54,14 +60,14 @@ const MyCollectionsGrid: React.FC<Props> = ({ collections, title }) => {
                             wrapperStyle={{ marginRight: 26, marginBottom: 26 }}
                             hoverAnimation
                             BottomContent={
-                                <PriceContainer>
+                                <CollectionPriceContainer>
                                     <LeftContentWrapper>
                                         <SmallRegularText color={colorTheme.GREY}>Owned</SmallRegularText>
                                         <MediumLargeBoldText color={colorTheme.ORANGE}>
                                             {collection.ownedItems} items
                                         </MediumLargeBoldText>
                                     </LeftContentWrapper>
-                                </PriceContainer>
+                                </CollectionPriceContainer>
                             }
                         />
                     </div>

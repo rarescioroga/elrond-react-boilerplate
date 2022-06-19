@@ -6,7 +6,7 @@ import { getAvailableCollections, getLiveCollections, getWalletCollections } fro
 import { selectLiveCollections, setLiveCollections } from '../reduxSlices/liveCollectionsSlice';
 import { selectAvailableCollections, setAvailableCollections } from '../reduxSlices/availableCollectionsSlice';
 import { selectMyCollections, setMyCollections } from '../reduxSlices/myCollectionSlice';
-import useSearchFilter from '../../../redux/useSearchFilter';
+import useSearchFilter from '../../../common/redux/hooks/useSearchFilter';
 import { useGetAccountInfo } from '@elrondnetwork/dapp-core';
 
 const useCollections = () => {

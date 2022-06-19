@@ -11,7 +11,7 @@ export const routes = [
     {
         path: '/my-collections',
         component: MyCollections,
-        authenticatedRoute: false,
+        authenticatedRoute: true,
     },
     {
         path: '/collection/:collectionId',

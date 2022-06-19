@@ -1,20 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
-
-import upArrowIcon from '../../assets/icons/up-arrow-icon.png';
-import useCollections from './hooks/useCollections';
-import { ScreenWrapper } from '../../common/styles';
-import { getCollectionImageSrc, isCollectionFullyMinted } from '../../utils';
 import {
     CollectionDescriptionContainer,
     MainButton,
     MediumLargeBoldText,
     MediumRegularText,
+    NftCard,
     SmallRegularText,
+    CollectionPriceContainer,
 } from '@haos-labs/tesserae-utils';
-import { colorTheme } from '../../constants/colors';
+
+import upArrowIcon from '../../assets/icons/up-arrow-icon.png';
+import useCollections from './hooks/useCollections';
 import useShop from '../shop/hooks/useShop';
+import { BaseFlexRow, ScreenWrapper } from '../../common/styles';
+import { getCollectionImageSrc, isCollectionFullyMinted } from '../../utils';
+import { colorTheme } from '../../constants/colors';
+import { CollectionsGridLayout, LeftContentWrapper } from '../../common/styles/nftStyles';
+import useNft from '../../common/redux/hooks/useNft';
 
 interface ThemeProps {
     primary: string;
@@ -32,9 +36,10 @@ interface ArrowIconProps {
 const Container = styled(ScreenWrapper)`
     display: flex;
     flex: 1;
-    flex-direction: row;
+    flex-direction: column;
     align-items: flex-start;
-    max-width: 1200px;
+    max-width: 1227px;
+    width: 100%;
     margin-top: 70px;
 `;
 
@@ -59,7 +64,7 @@ const LeftContent = styled.div`
 
 const RightContent = styled(LeftContent)`
     flex: 2.43;
-    margin: 0;
+    margin-right: 20px;
 `;
 
 const Image = styled.img`
@@ -84,19 +89,10 @@ const FlexColum = styled.div`
     flex-direction: column;
 `;
 
-const FlexRow = styled.div`
-    display: flex;
-    flex-direction: row;
+const FlexRow = styled(BaseFlexRow)`
     align-items: center;
     justify-content: space-between;
     margin-bottom: 33px;
-`;
-
-const Divider = styled.div`
-    width: 100%;
-    height: 1px;
-    background-color: ${colorTheme.LIGHT_GREY};
-    margin: 40px 0;
 `;
 
 const BenefitsContainer = styled.div<BenefitsContainerProps>`
@@ -123,9 +119,9 @@ const CollectionDetails: React.FC = () => {
     const [collection, setCollection] = useState<any>(null);
     const [showBenefits, setShowBenefits] = useState<boolean>(false);
     const { shopTheme } = useShop(collection?.shop_name);
+    const { nftList } = useNft(collection?.nft_token_id);
     const isMintDone = collection && isCollectionFullyMinted(collection);
 
-    console.log('LOGGER isMintDone ------------------->> ', isMintDone);
     if (shopTheme) {
         theme = shopTheme;
     }
@@ -146,59 +142,92 @@ const CollectionDetails: React.FC = () => {
     return (
         <ScreenWrapper>
             <Container>
-                <LeftContent>
-                    <Image src={getCollectionImageSrc(collection)} />
-                    {!isMintDone && (
-                        <BuyButtonContainer {...theme}>
-                            <FlexColum>
-                                <SmallRegularText fontSize={12} color={theme.secondary}>
-                                    Item Price
-                                </SmallRegularText>
-                                <MediumLargeBoldText fontSize={20} color={theme.secondary}>
-                                    {Number(collection.selling_price)}
-                                </MediumLargeBoldText>
-                            </FlexColum>
+                <BaseFlexRow>
+                    <LeftContent>
+                        <Image src={getCollectionImageSrc(collection)} />
+                        {!isMintDone && (
+                            <BuyButtonContainer {...theme}>
+                                <FlexColum>
+                                    <SmallRegularText fontSize={12} color={theme.secondary}>
+                                        Item Price
+                                    </SmallRegularText>
+                                    <MediumLargeBoldText fontSize={20} color={theme.secondary}>
+                                        {Number(collection.selling_price)}
+                                    </MediumLargeBoldText>
+                                </FlexColum>
 
-                            <MainButton theme={theme} onClick={() => console.log('Click')} inverse>
-                                Buy Now
-                            </MainButton>
-                        </BuyButtonContainer>
-                    )}
-                </LeftContent>
-                <RightContent>
-                    <CollectionDescriptionContainer
-                        title={collection.token_name}
-                        subtitle={`By ${collection.shop_name}`}
-                        detailsTitle="Description"
-                        details={collection.description}
-                        logoSrc="https://i.pinimg.com/280x280_RS/81/a7/ce/81a7ce9d3bc250bd44fae2b7f188c685.jpg"
-                        showDivider
-                    >
-                        <>
-                            <FlexRow>
-                                <MediumLargeBoldText extraCss="margin-bottom: 12px">Benefits</MediumLargeBoldText>
-                                <ArrowIcon
-                                    src={upArrowIcon}
-                                    onClick={() => setShowBenefits((val) => !val)}
-                                    inverse={showBenefits}
+                                <MainButton theme={theme} onClick={() => console.log('Click')} inverse>
+                                    Buy Now
+                                </MainButton>
+                            </BuyButtonContainer>
+                        )}
+                    </LeftContent>
+                    <RightContent>
+                        <CollectionDescriptionContainer
+                            title={collection.token_name}
+                            subtitle={`By ${collection.shop_name}`}
+                            detailsTitle="Description"
+                            details={collection.description}
+                            logoSrc="https://i.pinimg.com/280x280_RS/81/a7/ce/81a7ce9d3bc250bd44fae2b7f188c685.jpg"
+                            showDivider
+                        >
+                            <>
+                                <FlexRow>
+                                    <MediumLargeBoldText extraCss="margin-bottom: 12px">Benefits</MediumLargeBoldText>
+                                    <ArrowIcon
+                                        src={upArrowIcon}
+                                        onClick={() => setShowBenefits((val) => !val)}
+                                        inverse={showBenefits}
+                                    />
+                                </FlexRow>
+                                <BenefitsContainer showExtendedContainer={showBenefits}>
+                                    {showBenefits &&
+                                        collection.benefits.map((benefit: any, index: any) => (
+                                            <React.Fragment key={`benefit-${index}`}>
+                                                <MediumLargeBoldText extraCss="margin-bottom: 12px">
+                                                    {benefit.name}
+                                                </MediumLargeBoldText>
+                                                <MediumRegularText extraCss="margin-bottom: 25px;">
+                                                    {benefit.description}
+                                                </MediumRegularText>
+                                            </React.Fragment>
+                                        ))}
+                                </BenefitsContainer>
+                            </>
+                        </CollectionDescriptionContainer>
+                    </RightContent>
+                </BaseFlexRow>
+                {isMintDone && nftList && (
+                    <CollectionsGridLayout style={{ marginTop: 25 }}>
+                        {nftList.map((nft: any, index: any) => {
+                            console.log('LOGGER nft ------------------->> ', nft);
+                            return (
+                                <NftCard
+                                    key={`nft-listed-${index}`}
+                                    imageUrl={nft.url}
+                                    title={nft.identifier}
+                                    subtitle={`By ${collection.shop_name}`}
+                                    price={Number(nft.listing_price)}
+                                    wrapperStyle={{ marginRight: 26, marginBottom: 26 }}
+                                    hoverAnimation
+                                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                                    //@ts-ignore
+                                    largerWidth
+                                    BottomContent={
+                                        <CollectionPriceContainer backgroundColor={theme.secondary}>
+                                            <LeftContentWrapper>
+                                                <SmallRegularText color={theme.primary}>Price</SmallRegularText>
+                                                <MediumLargeBoldText color={theme.primary}>
+                                                    {Number(nft.listing_price)} EGLD
+                                                </MediumLargeBoldText>
+                                            </LeftContentWrapper>
+                                        </CollectionPriceContainer>
+                                    }
                                 />
-                            </FlexRow>
-                            <BenefitsContainer showExtendedContainer={showBenefits}>
-                                {showBenefits &&
-                                    collection.benefits.map((benefit: any, index: any) => (
-                                        <React.Fragment key={`benefit-${index}`}>
-                                            <MediumLargeBoldText extraCss="margin-bottom: 12px">
-                                                {benefit.name}
-                                            </MediumLargeBoldText>
-                                            <MediumRegularText extraCss="margin-bottom: 25px;">
-                                                {benefit.description}
-                                            </MediumRegularText>
-                                        </React.Fragment>
-                                    ))}
-                            </BenefitsContainer>
-                        </>
-                    </CollectionDescriptionContainer>
-                </RightContent>
+                            );
+                        })}
+                    </CollectionsGridLayout>
+                )}
             </Container>
         </ScreenWrapper>
     );

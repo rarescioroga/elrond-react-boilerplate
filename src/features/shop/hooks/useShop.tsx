@@ -3,7 +3,7 @@ import { useQuery } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { getShopDetails } from '../api';
-import { selectShopTheme, setShop } from '../../../redux/appConfigSlice';
+import { selectShopTheme, setShop } from '../../../common/redux/slices/appConfigSlice';
 
 const useShop = (shopName = '') => {
     const dispatch = useDispatch();

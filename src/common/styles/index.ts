@@ -22,3 +22,8 @@ export const HeaderWrapper = styled.div`
 export const ComponentsWrapper = styled.div`
     margin-top: 103px;
 `;
+
+export const BaseFlexRow = styled.div`
+    display: flex;
+    flex-direction: row;
+`;
