@@ -6,7 +6,7 @@ const useNft = (collectionId: string) => {
     const [nftList, setNftList] = useState<any[]>([]);
 
     const { isSuccess: isListedNftsFetchSuccess, data: listedNftsData } = useQuery(
-        ['liveCollections', collectionId],
+        ['listedNftsData', collectionId],
         () => getListedNfts(collectionId),
     );
 

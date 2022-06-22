@@ -1,6 +1,7 @@
 import Homepage from './features/collection/Homepage';
 import MyCollections from './features/collection/MyCollections';
 import CollectionDetails from './features/collection/CollectionDetails';
+import MyCollectionDetail from './features/collection/MyCollectionDetail';
 
 export const routes = [
     {
@@ -11,6 +12,11 @@ export const routes = [
     {
         path: '/my-collections',
         component: MyCollections,
+        authenticatedRoute: true,
+    },
+    {
+        path: '/my-collections/:collectionId',
+        component: MyCollectionDetail,
         authenticatedRoute: true,
     },
     {

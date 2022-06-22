@@ -15,6 +15,7 @@ const MainContentWrapper = styled.div`
 
 const MyCollections: React.FC = () => {
     const { myCollections } = useCollections();
+    console.log('LOGGER myCollections ------------------->> ', myCollections);
 
     return (
         <ScreenWrapper>

@@ -221,6 +221,9 @@ const CollectionDetails: React.FC = () => {
                                                     {Number(nft.listing_price)} EGLD
                                                 </MediumLargeBoldText>
                                             </LeftContentWrapper>
+                                            <MediumLargeBoldText fontSize={24} color={theme.primary}>
+                                                Buy
+                                            </MediumLargeBoldText>
                                         </CollectionPriceContainer>
                                     }
                                 />
