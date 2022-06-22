@@ -10,7 +10,7 @@ import AuthButton from './Elrond/AuthButton';
 import useSearchFilter from './redux/hooks/useSearchFilter';
 import { colorTheme } from '../constants/colors';
 import { routeNames } from '../routes';
-import useShop from '../features/shop/hooks/useShop';
+import useShop from './redux/hooks/useShop';
 
 const Wrapper = styled.div`
     display: flex;
@@ -37,7 +37,7 @@ const SearchBarHeader = () => {
     const { pathname } = useLocation();
     const navigate = useNavigate();
     const isMyCollectionScreen = pathname === routeNames.myCollections;
-    const isCollectionDetailsScreen = pathname.includes('/collection');
+    const isCollectionDetailsScreen = pathname.includes('/collection') || pathname.includes('/my-collections');
     const buttonTheme = shopTheme && isCollectionDetailsScreen ? shopTheme : baseButtonTheme;
 
     const onMyCollectionsButtonClick = () => {

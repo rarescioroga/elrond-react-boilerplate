@@ -6,7 +6,7 @@ import Banner from '../../common/Banner';
 import LiveCollectionsList from './LiveCollectionsList';
 import CollectionsGrid from './common/CollectionsGrid';
 import useSearchFilter from '../../common/redux/hooks/useSearchFilter';
-import useCollections from './hooks/useCollections';
+import useCollections from '../../common/redux/hooks/useCollections';
 import { colorTheme } from '../../constants/colors';
 import { ScreenWrapper } from '../../common/styles';
 

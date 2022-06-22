@@ -2,11 +2,11 @@ import { useEffect } from 'react';
 import { useQuery } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { getAvailableCollections, getLiveCollections, getWalletCollections } from '../api';
-import { selectLiveCollections, setLiveCollections } from '../reduxSlices/liveCollectionsSlice';
-import { selectAvailableCollections, setAvailableCollections } from '../reduxSlices/availableCollectionsSlice';
-import { selectMyCollections, setMyCollections } from '../reduxSlices/myCollectionSlice';
-import useSearchFilter from '../../../common/redux/hooks/useSearchFilter';
+import { getAvailableCollections, getLiveCollections, getWalletCollections } from '../api/collection';
+import { selectLiveCollections, setLiveCollections } from '../slices/liveCollectionsSlice';
+import { selectAvailableCollections, setAvailableCollections } from '../slices/availableCollectionsSlice';
+import { selectMyCollections, setMyCollections } from '../slices/myCollectionSlice';
+import useSearchFilter from './useSearchFilter';
 import { useGetAccountInfo } from '@elrondnetwork/dapp-core';
 
 const useCollections = () => {

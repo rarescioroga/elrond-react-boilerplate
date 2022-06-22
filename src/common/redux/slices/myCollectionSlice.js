@@ -4,6 +4,7 @@ export const myCollectionsSlice = createSlice({
     name: 'myCollections',
     initialState: {
         collections: [],
+        nfts: [],
         isLoading: false,
         error: null,
     },
@@ -11,11 +12,15 @@ export const myCollectionsSlice = createSlice({
         setMyCollections: (state, action) => {
             state.collections = action.payload;
         },
+        setMyNfts: (state, action) => {
+            state.nfts = action.payload;
+        },
     },
 });
 
-export const { setMyCollections } = myCollectionsSlice.actions;
+export const { setMyCollections, setMyNfts } = myCollectionsSlice.actions;
 
 export const selectMyCollections = (state) => state.myCollections.collections;
+export const selectMyNfts = (state) => state.myCollections.nfts;
 
 export default myCollectionsSlice.reducer;

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import useCollections from './hooks/useCollections';
+import useCollections from '../../common/redux/hooks/useCollections';
 import { NftCard, TitleText } from '@haos-labs/tesserae-utils';
 import { useNavigate } from 'react-router-dom';
 

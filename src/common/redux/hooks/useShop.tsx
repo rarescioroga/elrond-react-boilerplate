@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 import { useQuery } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { getShopDetails } from '../api';
-import { selectShopTheme, setShop } from '../../../common/redux/slices/appConfigSlice';
+import { getShopDetails } from '../api/shop';
+import { selectShopTheme, setShop } from '../slices/appConfigSlice';
 
 const useShop = (shopName = '') => {
     const dispatch = useDispatch();

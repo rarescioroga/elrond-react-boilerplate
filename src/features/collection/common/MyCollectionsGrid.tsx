@@ -15,6 +15,7 @@ import { LeftContentWrapper } from '../../../common/styles/nftStyles';
 type Props = {
     collections: any[];
     title?: string;
+    isMyCollection?: boolean;
 };
 
 const Wrapper = styled.div`
@@ -34,11 +35,11 @@ const CollectionsRow = styled.div`
     overflow: initial;
 `;
 
-const MyCollectionsGrid: React.FC<Props> = ({ collections, title }) => {
+const MyCollectionsGrid: React.FC<Props> = ({ collections, title, isMyCollection }) => {
     const navigate = useNavigate();
 
     const goToCollectionDetails = (collection: any) => {
-        navigate('/collection/' + collection.nft_token_id);
+        navigate(`/${isMyCollection ? 'my-collections' : 'collection'}/` + collection.nft_token_id);
     };
 
     return (

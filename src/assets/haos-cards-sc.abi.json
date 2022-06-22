@@ -1,0 +1,1306 @@
+{
+    "buildInfo": {
+        "rustc": {
+            "version": "1.63.0-nightly",
+            "commitHash": "420c970cb1edccbf60ff2aeb51ca01e2300b09ef",
+            "commitDate": "2022-06-09",
+            "channel": "Nightly",
+            "short": "rustc 1.63.0-nightly (420c970cb 2022-06-09)"
+        },
+        "contractCrate": {
+            "name": "haos-cards-sc",
+            "version": "0.0.0",
+            "git_version": "31bbe03-modified"
+        },
+        "framework": {
+            "name": "elrond-wasm",
+            "version": "0.32.0"
+        }
+    },
+    "name": "HaosCardsContract",
+    "constructor": {
+        "inputs": [],
+        "outputs": []
+    },
+    "endpoints": [
+        {
+            "name": "add_collection_card",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "collection_id",
+                    "type": "bytes"
+                },
+                {
+                    "name": "card",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "card_type",
+                    "type": "CardType"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "getBenefitForType",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "collection_name",
+                    "type": "bytes"
+                },
+                {
+                    "name": "card_type",
+                    "type": "CardType"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "Benefit"
+                }
+            ]
+        },
+        {
+            "name": "update_status",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "new_status",
+                    "type": "CollectionStatus"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "CollectionStatus"
+                }
+            ]
+        },
+        {
+            "name": "update_collection_status",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "collection_name",
+                    "type": "bytes"
+                },
+                {
+                    "name": "new_status",
+                    "type": "CollectionStatus"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "add_shop_data",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "shop_name",
+                    "type": "bytes"
+                },
+                {
+                    "name": "owner",
+                    "type": "Address"
+                },
+                {
+                    "name": "wallets",
+                    "type": "List<Address>"
+                },
+                {
+                    "name": "primary_color",
+                    "type": "bytes"
+                },
+                {
+                    "name": "secondary_color",
+                    "type": "bytes"
+                },
+                {
+                    "name": "text_primary_color",
+                    "type": "bytes"
+                },
+                {
+                    "name": "text_secondary_color",
+                    "type": "bytes"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "update_shop_wallets",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "shop_name",
+                    "type": "bytes"
+                },
+                {
+                    "name": "wallets",
+                    "type": "List<Address>"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "getShopForWallet",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "bytes"
+                }
+            ]
+        },
+        {
+            "name": "getShopDetailsForWallet",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "Option<ShopInfo>"
+                }
+            ]
+        },
+        {
+            "name": "getUserType",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "UserType"
+                }
+            ]
+        },
+        {
+            "name": "getCollectionTheme",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "collection_name",
+                    "type": "bytes"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "Theme"
+                }
+            ]
+        },
+        {
+            "name": "getAllCollectionsDetails",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "List<CardCollection>"
+                }
+            ]
+        },
+        {
+            "name": "getAllMintableCollectionsDetails",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "List<CardCollection>"
+                }
+            ]
+        },
+        {
+            "name": "getAllAvailableCollectionsDetails",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "List<CardCollection>"
+                }
+            ]
+        },
+        {
+            "name": "getAllCollectionsForShop",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "shop_name",
+                    "type": "bytes"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "List<CardCollection>"
+                }
+            ]
+        },
+        {
+            "name": "getAllCollectionsForWallet",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "List<CardCollection>"
+                }
+            ]
+        },
+        {
+            "name": "getAllShopsDetails",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "List<ShopInfo>"
+                }
+            ]
+        },
+        {
+            "name": "getScanInfoForCard",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "card",
+                    "type": "TokenIdentifier"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "CardScanInfo"
+                }
+            ]
+        },
+        {
+            "name": "getListedItemsForCollection",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "collection_id",
+                    "type": "bytes"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "List<CardDetails>"
+                }
+            ]
+        },
+        {
+            "name": "getListedItemsForWallet",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "List<CardDetails>"
+                }
+            ]
+        },
+        {
+            "name": "redeem_card",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "token_identifier",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "collection_id",
+                    "type": "bytes"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "cleear_storage",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "name": "getCardDetails",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "card",
+                    "type": "TokenIdentifier"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "CardGeneralInfo"
+                }
+            ]
+        },
+        {
+            "name": "getCardScans",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "card",
+                    "type": "TokenIdentifier"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "CardScanInfo"
+                }
+            ]
+        },
+        {
+            "name": "getShopForOwner",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "wallet_owner",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "bytes"
+                }
+            ]
+        },
+        {
+            "name": "getScansForShop",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "shop_name",
+                    "type": "bytes"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "variadic<ScanInfo>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "listNft",
+            "mutability": "mutable",
+            "payableInTokens": [
+                "*"
+            ],
+            "inputs": [
+                {
+                    "name": "requested_amount",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "nft_id",
+                    "type": "bytes"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "bytes"
+                }
+            ]
+        },
+        {
+            "name": "addId",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "token",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "collection_name",
+                    "type": "bytes"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u32"
+                }
+            ]
+        },
+        {
+            "name": "buyNft",
+            "mutability": "mutable",
+            "payableInTokens": [
+                "*"
+            ],
+            "inputs": [
+                {
+                    "name": "nft_id",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "collection_name",
+                    "type": "bytes"
+                },
+                {
+                    "name": "nft_nonce",
+                    "type": "u64"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "withdraw",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "nft_id",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "collection_name",
+                    "type": "bytes"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "getAuctionById",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "auction_id",
+                    "type": "u64"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "Auction"
+                }
+            ]
+        },
+        {
+            "name": "getMarketplaceCutPercentage",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "listedNftsForWallet",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "variadic<bytes>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "listedNftsForCollection",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "collection_name",
+                    "type": "bytes"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "variadic<bytes>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "getLastValidAuctionId",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "getClaimableAmount",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "address",
+                    "type": "Address"
+                },
+                {
+                    "name": "token_id",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "token_nonce",
+                    "type": "u64"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "doesAuctionExist",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "auction_id",
+                    "type": "u64"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "bool"
+                }
+            ]
+        },
+        {
+            "name": "getOriginalOwner",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "auction_id",
+                    "type": "u64"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "optional<Address>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "getFullAuctionData",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "auction_id",
+                    "type": "u64"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "optional<Auction>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "setCollectionAttributes",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "collection_name",
+                    "type": "bytes"
+                },
+                {
+                    "name": "shop_name",
+                    "type": "bytes"
+                },
+                {
+                    "name": "image_base_cid",
+                    "type": "bytes"
+                },
+                {
+                    "name": "metadata_base_cid",
+                    "type": "bytes"
+                },
+                {
+                    "name": "amount_of_tokens",
+                    "type": "u32"
+                },
+                {
+                    "name": "fee",
+                    "type": "u32"
+                },
+                {
+                    "name": "royalties",
+                    "type": "u32"
+                },
+                {
+                    "name": "selling_price",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "tags",
+                    "type": "bytes"
+                },
+                {
+                    "name": "description",
+                    "type": "bytes"
+                },
+                {
+                    "name": "benefits",
+                    "type": "List<Benefit>"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "issueToken",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "payableInTokens": [
+                "EGLD"
+            ],
+            "inputs": [
+                {
+                    "name": "collection_name",
+                    "type": "bytes"
+                },
+                {
+                    "name": "token_ticker",
+                    "type": "bytes"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "setLocalRoles",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "collection_name",
+                    "type": "bytes"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "pauseMinting",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "collection_name",
+                    "type": "bytes"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "startMinting",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "collection_name",
+                    "type": "bytes"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "setNewPrice",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "collection_name",
+                    "type": "bytes"
+                },
+                {
+                    "name": "price",
+                    "type": "BigUint"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "giveaway",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "address",
+                    "type": "Address"
+                },
+                {
+                    "name": "collection_name",
+                    "type": "bytes"
+                },
+                {
+                    "name": "amount_of_tokens",
+                    "type": "u32"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "claimScFunds",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "name": "getBalance",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "populateIndexes",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "collection_name",
+                    "type": "bytes"
+                },
+                {
+                    "name": "amount",
+                    "type": "u32"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "mint",
+            "mutability": "mutable",
+            "payableInTokens": [
+                "EGLD"
+            ],
+            "inputs": [
+                {
+                    "name": "collection_name",
+                    "type": "bytes"
+                },
+                {
+                    "name": "amount_of_tokens",
+                    "type": "u32"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "shuffle",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "collection_name",
+                    "type": "bytes"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "getTotalTokensLeft",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "collection_name",
+                    "type": "bytes"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u32"
+                }
+            ]
+        },
+        {
+            "name": "getCollectionDetails",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "collection_name",
+                    "type": "bytes"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "CardCollection"
+                }
+            ]
+        },
+        {
+            "name": "getCollectionName",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "collection_id",
+                    "type": "bytes"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "bytes"
+                }
+            ]
+        },
+        {
+            "name": "getCollectionBenefits",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "collection_name",
+                    "type": "bytes"
+                },
+                {
+                    "name": "cardType",
+                    "type": "CardType"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "bytes"
+                }
+            ]
+        },
+        {
+            "name": "getCollectionNames",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<bytes>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "getCollectionIds",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<bytes>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "getCollectionsForShop",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "shop_name",
+                    "type": "bytes"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "variadic<bytes>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "getShopInfo",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "shop_name",
+                    "type": "bytes"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "ShopInfo"
+                }
+            ]
+        },
+        {
+            "name": "getShopsName",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<bytes>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "getStatus",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "CollectionStatus"
+                }
+            ]
+        }
+    ],
+    "events": [],
+    "hasCallback": true,
+    "types": {
+        "Auction": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "auctioned_token",
+                    "type": "EsdtToken"
+                },
+                {
+                    "name": "requested_amount",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "start_time",
+                    "type": "u64"
+                },
+                {
+                    "name": "original_owner",
+                    "type": "Address"
+                },
+                {
+                    "name": "current_winner",
+                    "type": "Address"
+                },
+                {
+                    "name": "marketplace_cut_percentage",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "creator_royalties_percentage",
+                    "type": "BigUint"
+                }
+            ]
+        },
+        "Benefit": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "card_type",
+                    "type": "CardType"
+                },
+                {
+                    "name": "name",
+                    "type": "bytes"
+                },
+                {
+                    "name": "description",
+                    "type": "bytes"
+                }
+            ]
+        },
+        "CardCollection": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "nft_token_id",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "token_name",
+                    "type": "bytes"
+                },
+                {
+                    "name": "selling_price",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "image_base_cid",
+                    "type": "bytes"
+                },
+                {
+                    "name": "metadata_base_cid",
+                    "type": "bytes"
+                },
+                {
+                    "name": "amount_of_tokens_total",
+                    "type": "u32"
+                },
+                {
+                    "name": "minted_indexes_total",
+                    "type": "u32"
+                },
+                {
+                    "name": "fee",
+                    "type": "u32"
+                },
+                {
+                    "name": "royalties",
+                    "type": "u32"
+                },
+                {
+                    "name": "paused",
+                    "type": "bool"
+                },
+                {
+                    "name": "tags",
+                    "type": "bytes"
+                },
+                {
+                    "name": "tokens_left_to_mint",
+                    "type": "List<u32>"
+                },
+                {
+                    "name": "initial_shuffle_triggered",
+                    "type": "bool"
+                },
+                {
+                    "name": "initial_indexes_populate_done",
+                    "type": "bool"
+                },
+                {
+                    "name": "roles_set",
+                    "type": "bool"
+                },
+                {
+                    "name": "shop_name",
+                    "type": "bytes"
+                },
+                {
+                    "name": "status",
+                    "type": "CollectionStatus"
+                },
+                {
+                    "name": "total_scans",
+                    "type": "u32"
+                },
+                {
+                    "name": "next_index",
+                    "type": "u32"
+                },
+                {
+                    "name": "next_item",
+                    "type": "u32"
+                },
+                {
+                    "name": "description",
+                    "type": "bytes"
+                },
+                {
+                    "name": "benefits",
+                    "type": "List<Benefit>"
+                }
+            ]
+        },
+        "CardDetails": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "card_id",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "collection_id",
+                    "type": "bytes"
+                },
+                {
+                    "name": "listing_price",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "listed_at",
+                    "type": "u64"
+                }
+            ]
+        },
+        "CardGeneralInfo": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "collection_name",
+                    "type": "bytes"
+                },
+                {
+                    "name": "card_type",
+                    "type": "CardType"
+                },
+                {
+                    "name": "auction_id",
+                    "type": "u64"
+                }
+            ]
+        },
+        "CardScanInfo": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "scan_count",
+                    "type": "u32"
+                },
+                {
+                    "name": "total_scans",
+                    "type": "u32"
+                },
+                {
+                    "name": "last_scan",
+                    "type": "u64"
+                },
+                {
+                    "name": "scans",
+                    "type": "List<ScanInfo>"
+                }
+            ]
+        },
+        "CardType": {
+            "type": "enum",
+            "variants": [
+                {
+                    "name": "OnePerWeek",
+                    "discriminant": 0
+                },
+                {
+                    "name": "ThreePerWeek",
+                    "discriminant": 1
+                },
+                {
+                    "name": "FivePerWeek",
+                    "discriminant": 2
+                },
+                {
+                    "name": "FiftyConsumable",
+                    "discriminant": 3
+                }
+            ]
+        },
+        "CollectionStatus": {
+            "type": "enum",
+            "variants": [
+                {
+                    "name": "Undefined",
+                    "discriminant": 0
+                },
+                {
+                    "name": "Active",
+                    "discriminant": 1
+                },
+                {
+                    "name": "Inactive",
+                    "discriminant": 2
+                }
+            ]
+        },
+        "EsdtToken": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "token_type",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "nonce",
+                    "type": "u64"
+                }
+            ]
+        },
+        "ScanInfo": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "timestamp",
+                    "type": "u64"
+                },
+                {
+                    "name": "wallet",
+                    "type": "Address"
+                },
+                {
+                    "name": "card",
+                    "type": "bytes"
+                }
+            ]
+        },
+        "ShopInfo": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "name",
+                    "type": "bytes"
+                },
+                {
+                    "name": "owner",
+                    "type": "Address"
+                },
+                {
+                    "name": "wallets",
+                    "type": "List<Address>"
+                },
+                {
+                    "name": "collection_names",
+                    "type": "List<bytes>"
+                },
+                {
+                    "name": "theme",
+                    "type": "Theme"
+                }
+            ]
+        },
+        "Theme": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "primary_color_hex",
+                    "type": "bytes"
+                },
+                {
+                    "name": "secondary_color_hex",
+                    "type": "bytes"
+                },
+                {
+                    "name": "text_primary_color",
+                    "type": "bytes"
+                },
+                {
+                    "name": "text_secondary_color",
+                    "type": "bytes"
+                }
+            ]
+        },
+        "UserType": {
+            "type": "enum",
+            "variants": [
+                {
+                    "name": "User",
+                    "discriminant": 0
+                },
+                {
+                    "name": "Employee",
+                    "discriminant": 1
+                },
+                {
+                    "name": "Owner",
+                    "discriminant": 2
+                },
+                {
+                    "name": "Admin",
+                    "discriminant": 3
+                }
+            ]
+        }
+    }
+}

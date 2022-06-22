@@ -12,13 +12,14 @@ import {
 } from '@haos-labs/tesserae-utils';
 
 import upArrowIcon from '../../assets/icons/up-arrow-icon.png';
-import useCollections from './hooks/useCollections';
-import useShop from '../shop/hooks/useShop';
+import useCollections from '../../common/redux/hooks/useCollections';
+import useShop from '../../common/redux/hooks/useShop';
 import { BaseFlexRow, ScreenWrapper } from '../../common/styles';
 import { getCollectionImageSrc, isCollectionFullyMinted } from '../../utils';
 import { colorTheme } from '../../constants/colors';
 import { CollectionsGridLayout, LeftContentWrapper } from '../../common/styles/nftStyles';
 import useNft from '../../common/redux/hooks/useNft';
+import useTransactions from '../../common/redux/hooks/useTransactions';
 
 interface ThemeProps {
     primary: string;
@@ -116,6 +117,7 @@ let theme = {
 const CollectionDetails: React.FC = () => {
     const { collectionId } = useParams();
     const { getCollectionById, allCollections } = useCollections();
+    const { mintNft } = useTransactions();
     const [collection, setCollection] = useState<any>(null);
     const [showBenefits, setShowBenefits] = useState<boolean>(false);
     const { shopTheme } = useShop(collection?.shop_name);
@@ -126,6 +128,12 @@ const CollectionDetails: React.FC = () => {
         theme = shopTheme;
     }
 
+    const onMintNft = async () => {
+        if (collection) {
+            await mintNft(collection.token_name, Number(collection.selling_price));
+        }
+    };
+
     useEffect(() => {
         if (collectionId) {
             setCollection(getCollectionById(collectionId));
@@ -135,9 +143,6 @@ const CollectionDetails: React.FC = () => {
     if (!collection) {
         return null;
     }
-
-    // TODO -> check for mint status and display nfts that are for sale here
-    // TODO -> create new route for the items of a user in a collection with a label to go to list the nft for sale
 
     return (
         <ScreenWrapper>
@@ -156,7 +161,7 @@ const CollectionDetails: React.FC = () => {
                                     </MediumLargeBoldText>
                                 </FlexColum>
 
-                                <MainButton theme={theme} onClick={() => console.log('Click')} inverse>
+                                <MainButton theme={theme} onClick={onMintNft} inverse>
                                     Buy Now
                                 </MainButton>
                             </BuyButtonContainer>
