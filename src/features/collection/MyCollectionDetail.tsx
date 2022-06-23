@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { ScreenWrapper, BaseFlexRow } from '../../common/styles';
 import { getCollectionImageSrc } from '../../utils';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import useCollections from '../../common/redux/hooks/useCollections';
 import useNft from '../../common/redux/hooks/useNft';
 import {
@@ -93,6 +93,7 @@ let theme = {
 };
 
 const MyCollectionDetail: React.FC = () => {
+    const navigate = useNavigate();
     const { collectionId } = useParams();
     const { getCollectionById, allCollections } = useCollections();
     const { myNfts } = useNft(collectionId || '');
@@ -104,12 +105,15 @@ const MyCollectionDetail: React.FC = () => {
         theme = shopTheme;
     }
 
+    const goToMyNftDetailScreen = (nftId: string) => {
+        navigate(`./nft/${nftId}`);
+    };
+
     useEffect(() => {
         if (collectionId) {
             setCollection(getCollectionById(collectionId));
         }
     }, [collectionId, allCollections]);
-    console.log('LOGGER myNfts ------------------->> ', myNfts);
 
     if (!collection) {
         return null;
@@ -176,12 +180,7 @@ const MyCollectionDetail: React.FC = () => {
                                         <SmallRegularText color={theme.primary}>Owner</SmallRegularText>
                                         <MediumLargeBoldText color={theme.primary}>Verified</MediumLargeBoldText>
                                     </LeftContentWrapper>
-                                    <MainButton
-                                        theme={theme}
-                                        onClick={() => {
-                                            console.log('LOGGER  ------------------->> ');
-                                        }}
-                                    >
+                                    <MainButton theme={theme} onClick={() => goToMyNftDetailScreen(nft.identifier)}>
                                         List now
                                     </MainButton>
                                 </CollectionPriceContainer>

@@ -2,6 +2,7 @@ import Homepage from './features/collection/Homepage';
 import MyCollections from './features/collection/MyCollections';
 import CollectionDetails from './features/collection/CollectionDetails';
 import MyCollectionDetail from './features/collection/MyCollectionDetail';
+import NftDetail from './features/nft/NftDetail';
 
 export const routes = [
     {
@@ -24,12 +25,19 @@ export const routes = [
         component: CollectionDetails,
         authenticatedRoute: false,
     },
+    {
+        path: '/my-collections/:collectionId/nft/:nftId',
+        component: NftDetail,
+        authenticatedRoute: true,
+    },
 ];
 
 export const routeNames = {
     home: '/',
     myCollections: '/my-collections',
+    myCollectionsDetail: '/my-collections/:collectionId',
     collectionDetail: '/collection/:collectionId',
+    myNftDetail: '/my-collections/:collectionId/nft/:nftId',
 };
 
 const mappedRoutes = routes.map((route) => {

@@ -37,7 +37,7 @@ const SearchBarHeader = () => {
     const { pathname } = useLocation();
     const navigate = useNavigate();
     const isMyCollectionScreen = pathname === routeNames.myCollections;
-    const isCollectionDetailsScreen = pathname.includes('/collection') || pathname.includes('/my-collections');
+    const isCollectionDetailsScreen = pathname.includes('/collection') || pathname.includes('/my-collections/');
     const buttonTheme = shopTheme && isCollectionDetailsScreen ? shopTheme : baseButtonTheme;
 
     const onMyCollectionsButtonClick = () => {
