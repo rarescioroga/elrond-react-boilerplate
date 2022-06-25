@@ -1,128 +1,57 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
-
-import upArrowIcon from '../../assets/icons/up-arrow-icon.png';
-import useCollections from './hooks/useCollections';
-import { ScreenWrapper } from '../../common/styles';
-import { getCollectionImageSrc } from '../../utils';
 import {
-    ExtraLargeBoldText,
-    MainButton,
     MediumLargeBoldText,
-    MediumRegularText,
+    NftCard,
     SmallRegularText,
+    CollectionPriceContainer,
+    ImageAndBenefits,
+    MainButton,
 } from '@haos-labs/tesserae-utils';
+
+import useCollections from '../../common/redux/hooks/useCollections';
+import useShop from '../../common/redux/hooks/useShop';
+import { ScreenWrapper } from '../../common/styles';
+import { getCollectionImageSrc, isCollectionFullyMinted } from '../../utils';
 import { colorTheme } from '../../constants/colors';
-
-interface ThemeProps {
-    primary: string;
-    secondary: string;
-}
-
-interface BenefitsContainerProps {
-    display: boolean;
-}
-
-interface ArrowIconProps {
-    inverse: boolean;
-}
+import { CollectionsGridLayout, LeftContentWrapper } from '../../common/styles/nftStyles';
+import useNft from '../../common/redux/hooks/useNft';
+import useTransactions from '../../common/redux/hooks/useTransactions';
 
 const Container = styled(ScreenWrapper)`
     display: flex;
     flex: 1;
-    flex-direction: row;
+    flex-direction: column;
     align-items: flex-start;
-    max-width: 1200px;
+    max-width: 1227px;
+    width: 100%;
     margin-top: 70px;
 `;
 
-const ArrowIcon = styled.img<ArrowIconProps>`
-    width: 10px;
-    padding: 12px;
-    cursor: pointer;
-    transition: all 1s;
-    -webkit-transition: all 0.6s;
-    -moz-transition: all 0.6s;
-    -ms-transition: all 0.6s;
-    -o-transition: all 0.6s;
-    transform: ${({ inverse }) => inverse && 'rotate(-180deg) translateY(-10px)'};
-`;
-
-const LeftContent = styled.div`
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    margin-right: 25px;
-`;
-
-const RightContent = styled(LeftContent)`
-    flex: 2.43;
-    margin: 0;
-    box-shadow: 0 2px 43px 0 rgba(181, 181, 181, 0.36);
-    padding: 38px 45px 45px 39px;
-    border-radius: 10px;
-`;
-
-const Image = styled.img`
-    width: 100%;
-    aspect-ratio: 1 / 1;
-    border-radius: 10px;
-    object-fit: cover;
-`;
-
-const BuyButtonContainer = styled.div<ThemeProps>`
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    padding: 18px 16px;
-    margin-top: 25px;
-    border-radius: 10px;
-    background: ${({ primary }) => primary};
-`;
-
-const FlexColum = styled.div`
-    display: flex;
-    flex-direction: column;
-`;
-
-const FlexRow = styled.div`
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 33px;
-`;
-
-const Divider = styled.div`
-    width: 100%;
-    height: 1px;
-    background-color: ${colorTheme.LIGHT_GREY};
-    margin: 40px 0;
-`;
-
-const BenefitsContainer = styled.div<BenefitsContainerProps>`
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    overflow: hidden;
-    transition: max-height 1s;
-    -webkit-transition: max-height 1s;
-    -moz-transition: max-height 1s;
-    -ms-transition: max-height 1s;
-    -o-transition: max-height 1s;
-    max-height: ${({ display }) => (display ? 1000 : 0)}px;
-`;
+let theme = {
+    primary: colorTheme.ORANGE,
+    secondary: colorTheme.WHITE,
+};
 
 const CollectionDetails: React.FC = () => {
     const { collectionId } = useParams();
     const { getCollectionById, allCollections } = useCollections();
+    const { mintNft } = useTransactions();
     const [collection, setCollection] = useState<any>(null);
-    const [showBenefits, setShowBenefits] = useState<boolean>(false);
-    const theme = {
-        primary: '#FFE600',
-        secondary: '#000',
+    const { shopTheme } = useShop(collection?.shop_name);
+    const { nftList } = useNft(collection?.nft_token_id);
+    const { buyNft } = useTransactions();
+    const isMintDone = collection && isCollectionFullyMinted(collection);
+
+    if (shopTheme) {
+        theme = shopTheme;
+    }
+
+    const onMintNft = async () => {
+        if (collection) {
+            await mintNft(collection.token_name, Number(collection.selling_price));
+        }
     };
 
     useEffect(() => {
@@ -138,50 +67,46 @@ const CollectionDetails: React.FC = () => {
     return (
         <ScreenWrapper>
             <Container>
-                <LeftContent>
-                    <Image src={getCollectionImageSrc(collection)} />
-                    <BuyButtonContainer {...theme}>
-                        <FlexColum>
-                            <SmallRegularText fontSize={12} color={colorTheme.GREY}>
-                                Item Price
-                            </SmallRegularText>
-                            <MediumLargeBoldText fontSize={20}>{Number(collection.selling_price)}</MediumLargeBoldText>
-                        </FlexColum>
-                        <MainButton theme={theme} onClick={() => console.log('Click')} inverse>
-                            Buy Now
-                        </MainButton>
-                    </BuyButtonContainer>
-                </LeftContent>
-                <RightContent>
-                    <FlexColum style={{ marginBottom: 40 }}>
-                        <ExtraLargeBoldText fontSize={40}>{collection.token_name}</ExtraLargeBoldText>
-                        <MediumRegularText color={colorTheme.GREY}>By {collection.shop_name}</MediumRegularText>
-                    </FlexColum>
-                    <MediumLargeBoldText extraCss="margin-bottom: 12px">Description</MediumLargeBoldText>
-                    <MediumRegularText>{collection.description}</MediumRegularText>
-                    <Divider />
-                    <FlexRow>
-                        <MediumLargeBoldText extraCss="margin-bottom: 12px">Benefits</MediumLargeBoldText>
-                        <ArrowIcon
-                            src={upArrowIcon}
-                            onClick={() => setShowBenefits((val) => !val)}
-                            inverse={showBenefits}
-                        />
-                    </FlexRow>
-                    <BenefitsContainer display={showBenefits}>
-                        {showBenefits &&
-                            collection.benefits.map((benefit: any, index: any) => (
-                                <React.Fragment key={`benefit-${index}`}>
-                                    <MediumLargeBoldText extraCss="margin-bottom: 12px">
-                                        {benefit.name}
-                                    </MediumLargeBoldText>
-                                    <MediumRegularText extraCss="margin-bottom: 25px;">
-                                        {benefit.description}
-                                    </MediumRegularText>
-                                </React.Fragment>
-                            ))}
-                    </BenefitsContainer>
-                </RightContent>
+                <ImageAndBenefits
+                    imageSrc={getCollectionImageSrc(collection)}
+                    collection={collection}
+                    theme={theme}
+                    onBuyClick={onMintNft}
+                    logoSrc="https://i.pinimg.com/280x280_RS/81/a7/ce/81a7ce9d3bc250bd44fae2b7f188c685.jpg"
+                />
+                {isMintDone && nftList && (
+                    <CollectionsGridLayout style={{ marginTop: 25 }}>
+                        {nftList.map((nft: any, index: any) => {
+                            return (
+                                <NftCard
+                                    key={`nft-listed-${index}`}
+                                    imageUrl={nft.url}
+                                    title={nft.name}
+                                    subtitle={`By ${collection.shop_name}`}
+                                    price={Number(nft.listing_price)}
+                                    wrapperStyle={{ marginRight: 26, marginBottom: 26 }}
+                                    hoverAnimation
+                                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                                    //@ts-ignore
+                                    largerWidth
+                                    BottomContent={
+                                        <CollectionPriceContainer backgroundColor={theme.secondary}>
+                                            <LeftContentWrapper>
+                                                <SmallRegularText color={theme.primary}>Price</SmallRegularText>
+                                                <MediumLargeBoldText color={theme.primary}>
+                                                    {Number(nft.listing_price)} EGLD
+                                                </MediumLargeBoldText>
+                                            </LeftContentWrapper>
+                                            <MainButton theme={theme} onClick={() => buyNft(nft)}>
+                                                Buy now
+                                            </MainButton>
+                                        </CollectionPriceContainer>
+                                    }
+                                />
+                            );
+                        })}
+                    </CollectionsGridLayout>
+                )}
             </Container>
         </ScreenWrapper>
     );

@@ -4,16 +4,19 @@ import { MediumRegularText } from '@haos-labs/tesserae-utils';
 
 import Banner from '../../common/Banner';
 import LiveCollectionsList from './LiveCollectionsList';
-import CollectionsGrid from './common/CollectionsGrid';
-import useSearchFilter from '../../redux/useSearchFilter';
-import useCollections from './hooks/useCollections';
+import CollectionsGrid from './components/CollectionsGrid';
+import useSearchFilter from '../../common/redux/hooks/useSearchFilter';
+import useCollections from '../../common/redux/hooks/useCollections';
 import { colorTheme } from '../../constants/colors';
 import { ScreenWrapper } from '../../common/styles';
 
 const MainContentWrapper = styled.div`
     width: calc(100% - 300px);
-    max-width: 1200px;
+    max-width: 1227px;
     margin: 39px 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 `;
 
 const Homepage: React.FC = () => {

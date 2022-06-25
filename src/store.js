@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
-import liveCollectionsReducer from './features/collection/reduxSlices/liveCollectionsSlice';
-import availableCollectionsReducer from './features/collection/reduxSlices/availableCollectionsSlice';
-import myCollectionsReducer from './features/collection/reduxSlices/myCollectionSlice';
-import appConfigReducer from './redux/appConfigSlice';
+import liveCollectionsReducer from './common/redux/slices/liveCollectionsSlice';
+import availableCollectionsReducer from './common/redux/slices/availableCollectionsSlice';
+import myCollectionsReducer from './common/redux/slices/myCollectionSlice';
+import appConfigReducer from './common/redux/slices/appConfigSlice';
 
 const store = configureStore({
     reducer: {

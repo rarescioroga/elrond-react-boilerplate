@@ -10,5 +10,7 @@ export const getAvailableCollections = async () => {
 };
 
 export const getWalletCollections = async (walletAddress: string) => {
-    return await executeAsyncCall(`${apiUrl}/collection/address/${walletAddress}`);
+    if (walletAddress) {
+        return await executeAsyncCall(`${apiUrl}/collection/address/${walletAddress}`);
+    }
 };

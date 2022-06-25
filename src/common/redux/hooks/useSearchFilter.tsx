@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { selectSearchFilter, setFilter } from './appConfigSlice';
+import { selectSearchFilter, setFilter } from '../slices/appConfigSlice';
 
 const useSearchFilter = () => {
     const dispatch = useDispatch();

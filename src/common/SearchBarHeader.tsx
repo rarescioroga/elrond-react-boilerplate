@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { useGetLoginInfo } from '@elrondnetwork/dapp-core';
 import { MainButton } from '@haos-labs/tesserae-utils';
@@ -7,9 +7,10 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import logo from '../assets/Logo.png';
 import SearchBar from './components/SearchBar';
 import AuthButton from './Elrond/AuthButton';
-import useSearchFilter from '../redux/useSearchFilter';
+import useSearchFilter from './redux/hooks/useSearchFilter';
 import { colorTheme } from '../constants/colors';
 import { routeNames } from '../routes';
+import useShop from './redux/hooks/useShop';
 
 const Wrapper = styled.div`
     display: flex;
@@ -24,17 +25,20 @@ const Logo = styled.img`
     cursor: pointer;
 `;
 
-const buttonTheme = {
+const baseButtonTheme = {
     primary: colorTheme.ORANGE,
     secondary: colorTheme.WHITE,
 };
 
 const SearchBarHeader = () => {
     const { setSearchFilter, searchFilter } = useSearchFilter();
+    const { shopTheme } = useShop();
     const { isLoggedIn } = useGetLoginInfo();
     const { pathname } = useLocation();
     const navigate = useNavigate();
     const isMyCollectionScreen = pathname === routeNames.myCollections;
+    const isCollectionDetailsScreen = pathname.includes('/collection') || pathname.includes('/my-collections/');
+    const buttonTheme = shopTheme && isCollectionDetailsScreen ? shopTheme : baseButtonTheme;
 
     const onMyCollectionsButtonClick = () => {
         navigate(isMyCollectionScreen ? routeNames.home : routeNames.myCollections);

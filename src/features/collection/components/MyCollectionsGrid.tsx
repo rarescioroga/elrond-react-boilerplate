@@ -1,15 +1,21 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { NftCard, TitleText, SmallBoldText, SmallRegularText, MediumLargeBoldText } from '@haos-labs/tesserae-utils';
+import {
+    NftCard,
+    TitleText,
+    SmallRegularText,
+    MediumLargeBoldText,
+    CollectionPriceContainer,
+} from '@haos-labs/tesserae-utils';
 
-import { isCollectionFullyMinted } from '../../../utils';
 import { colorTheme } from '../../../constants/colors';
-import { PriceContainer, LeftContentWrapper, RightContentWrapper } from '../../../common/styles/nftStyles';
+import { LeftContentWrapper } from '../../../common/styles/nftStyles';
 
 type Props = {
     collections: any[];
     title?: string;
+    isMyCollection?: boolean;
 };
 
 const Wrapper = styled.div`
@@ -29,16 +35,11 @@ const CollectionsRow = styled.div`
     overflow: initial;
 `;
 
-const FlexRow = styled.div`
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-`;
-
-const CollectionsGrid: React.FC<Props> = ({ collections, title }) => {
+const MyCollectionsGrid: React.FC<Props> = ({ collections, title, isMyCollection }) => {
     const navigate = useNavigate();
+
     const goToCollectionDetails = (collection: any) => {
-        navigate('./collection/' + collection.nft_token_id);
+        navigate(`/${isMyCollection ? 'my-collections' : 'collection'}/` + collection.nft_token_id);
     };
 
     return (
@@ -60,21 +61,14 @@ const CollectionsGrid: React.FC<Props> = ({ collections, title }) => {
                             wrapperStyle={{ marginRight: 26, marginBottom: 26 }}
                             hoverAnimation
                             BottomContent={
-                                isCollectionFullyMinted(collection) && (
-                                    <PriceContainer>
-                                        <LeftContentWrapper>
-                                            <SmallRegularText color={colorTheme.GREY}>Floor Price</SmallRegularText>
-                                            <MediumLargeBoldText color={colorTheme.ORANGE}>2 EGLD</MediumLargeBoldText>
-                                        </LeftContentWrapper>
-                                        <RightContentWrapper>
-                                            <SmallRegularText color={colorTheme.GREY}>Listed</SmallRegularText>
-                                            <FlexRow>
-                                                <SmallBoldText color={colorTheme.ORANGE}>500</SmallBoldText>
-                                                <SmallBoldText color={colorTheme.GREY}>/1000</SmallBoldText>
-                                            </FlexRow>
-                                        </RightContentWrapper>
-                                    </PriceContainer>
-                                )
+                                <CollectionPriceContainer>
+                                    <LeftContentWrapper>
+                                        <SmallRegularText color={colorTheme.GREY}>Owned</SmallRegularText>
+                                        <MediumLargeBoldText color={colorTheme.ORANGE}>
+                                            {collection.ownedItems} items
+                                        </MediumLargeBoldText>
+                                    </LeftContentWrapper>
+                                </CollectionPriceContainer>
                             }
                         />
                     </div>
@@ -84,4 +78,4 @@ const CollectionsGrid: React.FC<Props> = ({ collections, title }) => {
     );
 };
 
-export default CollectionsGrid;
+export default MyCollectionsGrid;
