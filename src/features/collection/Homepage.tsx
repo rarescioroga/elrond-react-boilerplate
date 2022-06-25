@@ -4,7 +4,7 @@ import { MediumRegularText } from '@haos-labs/tesserae-utils';
 
 import Banner from '../../common/Banner';
 import LiveCollectionsList from './LiveCollectionsList';
-import CollectionsGrid from './common/CollectionsGrid';
+import CollectionsGrid from './components/CollectionsGrid';
 import useSearchFilter from '../../common/redux/hooks/useSearchFilter';
 import useCollections from '../../common/redux/hooks/useCollections';
 import { colorTheme } from '../../constants/colors';

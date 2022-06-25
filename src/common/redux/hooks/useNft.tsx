@@ -3,12 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useQuery } from 'react-query';
 import { useGetAccountInfo } from '@elrondnetwork/dapp-core';
 import { getListedNfts, getNftsByAccountAndAddress } from '../api/nft';
-import { selectMyNfts, setMyNfts } from '../slices/myCollectionSlice';
+import { selectMyNfts, selectNftById, setMyNfts } from '../slices/myCollectionSlice';
 
-const useNft = (collectionId: string) => {
+const useNft = (collectionId: string, nftId?: string) => {
     const { address } = useGetAccountInfo();
     const dispatch = useDispatch();
     const myNfts = useSelector(selectMyNfts);
+    const nftDetails = useSelector((state) => selectNftById(state, nftId));
     const [nftList, setNftList] = useState<any[]>([]);
 
     const { isSuccess: isListedNftsFetchSuccess, data: listedNftsData } = useQuery(
@@ -37,6 +38,7 @@ const useNft = (collectionId: string) => {
     return {
         nftList,
         myNfts,
+        nftDetails,
     };
 };
 

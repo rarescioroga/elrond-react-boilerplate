@@ -22,5 +22,6 @@ export const { setMyCollections, setMyNfts } = myCollectionsSlice.actions;
 
 export const selectMyCollections = (state) => state.myCollections.collections;
 export const selectMyNfts = (state) => state.myCollections.nfts;
+export const selectNftById = (state, nftId) => state.myCollections.nfts.find((nft) => nft.identifier === nftId);
 
 export default myCollectionsSlice.reducer;

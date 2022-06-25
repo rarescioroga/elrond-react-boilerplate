@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import MyCollectionsGrid from './common/MyCollectionsGrid';
+import MyCollectionsGrid from './components/MyCollectionsGrid';
 import useCollections from '../../common/redux/hooks/useCollections';
 import { MediumRegularText } from '@haos-labs/tesserae-utils';
 import { colorTheme } from '../../constants/colors';

@@ -37,10 +37,10 @@ const useTransactions = () => {
         return new SmartContract({ address, abi });
     }, [haosCardsJson, smartContractAddress]);
 
-    const listNft = async (collectionId: string, nft: { identifier: string; nonce: number }) => {
-        const { nonce, identifier } = nft;
+    const listNft = async (nft: { identifier: string; nonce: number; collection: string }, price: number) => {
+        const { nonce, identifier, collection: collectionId } = nft;
 
-        const interaction = abiRegistryContract.methods.listNft([0.3 * ONE_EGLD, identifier]);
+        const interaction = abiRegistryContract.methods.listNft([price * ONE_EGLD, identifier]);
         const tx = interaction
             .withSingleESDTNFTTransfer(TokenPayment.nonFungible(collectionId, nonce), new Address(address))
             .withValue(TokenPayment.egldFromAmount(0))
