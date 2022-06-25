@@ -55,19 +55,15 @@ const useTransactions = () => {
         });
     };
 
-    const buyNft = async ({
-        nftId,
-        collectionId,
-        nftNonce,
-    }: {
-        nftId: string;
-        collectionId: string;
-        nftNonce: number;
-    }) => {
+    const buyNft = async (nft: { identifier: string; collection: string; nonce: number; listing_price: string }) => {
         const tx = contract.call({
             func: new ContractFunction('buyNft'),
-            value: TokenPayment.egldFromAmount(0),
-            args: [new TokenIdentifierValue(nftId), BytesValue.fromUTF8(collectionId), new U64Value(nftNonce)],
+            value: TokenPayment.egldFromAmount(Number(nft.listing_price)),
+            args: [
+                new TokenIdentifierValue(nft.identifier),
+                BytesValue.fromUTF8(nft.collection),
+                new U64Value(nft.nonce),
+            ],
             gasLimit: 10000000,
             chainID,
         });

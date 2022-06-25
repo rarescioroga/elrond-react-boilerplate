@@ -7,6 +7,7 @@ import {
     SmallRegularText,
     CollectionPriceContainer,
     ImageAndBenefits,
+    MainButton,
 } from '@haos-labs/tesserae-utils';
 
 import useCollections from '../../common/redux/hooks/useCollections';
@@ -40,6 +41,7 @@ const CollectionDetails: React.FC = () => {
     const [collection, setCollection] = useState<any>(null);
     const { shopTheme } = useShop(collection?.shop_name);
     const { nftList } = useNft(collection?.nft_token_id);
+    const { buyNft } = useTransactions();
     const isMintDone = collection && isCollectionFullyMinted(collection);
 
     if (shopTheme) {
@@ -79,7 +81,7 @@ const CollectionDetails: React.FC = () => {
                                 <NftCard
                                     key={`nft-listed-${index}`}
                                     imageUrl={nft.url}
-                                    title={nft.identifier}
+                                    title={nft.name}
                                     subtitle={`By ${collection.shop_name}`}
                                     price={Number(nft.listing_price)}
                                     wrapperStyle={{ marginRight: 26, marginBottom: 26 }}
@@ -95,9 +97,9 @@ const CollectionDetails: React.FC = () => {
                                                     {Number(nft.listing_price)} EGLD
                                                 </MediumLargeBoldText>
                                             </LeftContentWrapper>
-                                            <MediumLargeBoldText fontSize={24} color={theme.primary}>
-                                                Buy
-                                            </MediumLargeBoldText>
+                                            <MainButton theme={theme} onClick={() => buyNft(nft)}>
+                                                Buy now
+                                            </MainButton>
                                         </CollectionPriceContainer>
                                     }
                                 />

@@ -75,7 +75,7 @@ const MyCollectionDetail: React.FC = () => {
                         <NftCard
                             key={`nft-listed-${index}`}
                             imageUrl={nft.url}
-                            title={nft.identifier}
+                            title={nft.name}
                             subtitle={`By ${collection.shop_name}`}
                             price={Number(nft.listing_price)}
                             wrapperStyle={{ marginRight: 26, marginBottom: 26 }}
