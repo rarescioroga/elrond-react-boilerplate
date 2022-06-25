@@ -28,6 +28,7 @@ const useTransactions = () => {
             address: new Address(smartContractAddress),
         });
     }, [smartContractAddress]);
+
     const abiRegistryContract = useMemo(() => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
@@ -96,29 +97,25 @@ const useTransactions = () => {
         });
     };
 
-    //
-    // const withdraw = async () => {
-    //     const contract = new SmartContract({
-    //         address: new Address('erd1qqqqqqqqqqqqqpgqz0kzfgpr0679hlc3s2hqa3nk6xqmm20xh55qf83km4'),
-    //     });
-    //
-    //     const tx = contract.call({
-    //         func: new ContractFunction('withdraw'),
-    //         args: [new U64Value(27)],
-    //         gasLimit: 10000000,
-    //         chainID: 'D',
-    //     });
-    //
-    //     const { sessionId } = await sendTransactions({
-    //         transactions: tx,
-    //         redirectAfterSign: false,
-    //     });
-    // };
+    const withdrawNft = async (nft: { identifier: string; collection: string }) => {
+        const tx = contract.call({
+            func: new ContractFunction('withdraw'),
+            args: [new TokenIdentifierValue(nft.identifier), BytesValue.fromUTF8(nft.collection)],
+            gasLimit: 10000000,
+            chainID,
+        });
+
+        const { sessionId } = await sendTransactions({
+            transactions: tx,
+            redirectAfterSign: false,
+        });
+    };
 
     return {
         listNft,
         buyNft,
         mintNft,
+        withdrawNft,
     };
 };
 

@@ -17,6 +17,7 @@ import {
 import { CollectionsGridLayout, LeftContentWrapper } from '../../common/styles/nftStyles';
 import { colorTheme } from '../../constants/colors';
 import useShop from '../../common/redux/hooks/useShop';
+import useTransactions from '../../common/redux/hooks/useTransactions';
 
 const Container = styled(ScreenWrapper)`
     display: flex;
@@ -40,6 +41,7 @@ const MyCollectionDetail: React.FC = () => {
     const { myNfts } = useNft(collectionId || '');
     const [collection, setCollection] = useState<any>(null);
     const { shopTheme } = useShop(collection?.shop_name);
+    const { withdrawNft } = useTransactions();
 
     if (shopTheme) {
         theme = shopTheme;
@@ -83,13 +85,36 @@ const MyCollectionDetail: React.FC = () => {
                             largerWidth
                             BottomContent={
                                 <CollectionPriceContainer backgroundColor={theme.secondary}>
-                                    <LeftContentWrapper>
-                                        <SmallRegularText color={theme.primary}>Owner</SmallRegularText>
-                                        <MediumLargeBoldText color={theme.primary}>Verified</MediumLargeBoldText>
-                                    </LeftContentWrapper>
-                                    <MainButton theme={theme} onClick={() => goToMyNftDetailScreen(nft.identifier)}>
-                                        List now
-                                    </MainButton>
+                                    {!nft.listing_price && (
+                                        <>
+                                            <LeftContentWrapper>
+                                                <SmallRegularText color={theme.primary}>Owner</SmallRegularText>
+                                                <MediumLargeBoldText color={theme.primary}>
+                                                    Verified
+                                                </MediumLargeBoldText>
+                                            </LeftContentWrapper>
+                                            <MainButton
+                                                theme={theme}
+                                                onClick={() => goToMyNftDetailScreen(nft.identifier)}
+                                            >
+                                                List now
+                                            </MainButton>
+                                        </>
+                                    )}
+
+                                    {nft.listing_price && (
+                                        <>
+                                            <LeftContentWrapper>
+                                                <SmallRegularText color={theme.primary}>Listed at</SmallRegularText>
+                                                <MediumLargeBoldText color={theme.primary}>
+                                                    {Number(nft.listing_price)} EGLD
+                                                </MediumLargeBoldText>
+                                            </LeftContentWrapper>
+                                            <MainButton theme={theme} onClick={() => withdrawNft(nft)}>
+                                                Withdraw
+                                            </MainButton>
+                                        </>
+                                    )}
                                 </CollectionPriceContainer>
                             }
                         />
