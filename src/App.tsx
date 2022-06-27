@@ -31,7 +31,7 @@ const App = () => {
                         <ScreenWrapper>
                             <TransactionsToastList />
                             <NotificationModal />
-                            <SignTransactionsModals />
+                            <SignTransactionsModals className="dapp-modal" />
                             <HeaderWrapper>
                                 <SearchBarHeader />
                             </HeaderWrapper>

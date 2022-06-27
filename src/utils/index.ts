@@ -23,7 +23,9 @@ export const getCollectionImageSrc = (collection: any) => {
     const nftCount = Number(collection.amount_of_tokens_total);
     const imagesCount = nftCount < 45 ? nftCount : 45;
     const randomIndex = Math.floor(imagesCount / 10);
-    return `https://devnet-media.elrond.com/nfts/asset/${collection.image_base_cid}/${randomIndex}.png`;
+    return `https://devnet-media.elrond.com/nfts/asset/${collection.image_base_cid}/${
+        randomIndex > 0 ? randomIndex : 1
+    }.png`;
 };
 
 export const stringToHex = (str: string) => {
