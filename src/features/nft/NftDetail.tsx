@@ -59,7 +59,7 @@ const NftDetail = () => {
             <Container>
                 <BaseFlexRow>
                     <LeftContent>
-                        <Image src={getCollectionImageSrc(collection)} />
+                        <Image src={nftDetails?.url} />
                     </LeftContent>
                     <RightContent>
                         <CollectionDescriptionContainer
