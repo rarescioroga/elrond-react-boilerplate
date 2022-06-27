@@ -34,9 +34,12 @@ const FlexRow = styled.div`
 
 const CollectionsGrid: React.FC<Props> = ({ collections, title }) => {
     const navigate = useNavigate();
+
     const goToCollectionDetails = (collection: any) => {
         navigate('./collection/' + collection.nft_token_id);
     };
+
+    console.log('LOGGER collections ------------------->> ', collections);
 
     return (
         <Wrapper>
@@ -64,13 +67,19 @@ const CollectionsGrid: React.FC<Props> = ({ collections, title }) => {
                                     <CollectionPriceContainer>
                                         <LeftContentWrapper>
                                             <SmallRegularText color={colorTheme.GREY}>Floor Price</SmallRegularText>
-                                            <MediumLargeBoldText color={colorTheme.ORANGE}>2 EGLD</MediumLargeBoldText>
+                                            <MediumLargeBoldText color={colorTheme.ORANGE}>
+                                                {collection.floor_price} EGLD
+                                            </MediumLargeBoldText>
                                         </LeftContentWrapper>
                                         <RightContentWrapper>
                                             <SmallRegularText color={colorTheme.GREY}>Listed</SmallRegularText>
                                             <FlexRow>
-                                                <SmallBoldText color={colorTheme.ORANGE}>500</SmallBoldText>
-                                                <SmallBoldText color={colorTheme.GREY}>/1000</SmallBoldText>
+                                                <SmallBoldText color={colorTheme.ORANGE}>
+                                                    {collection.listed_items}
+                                                </SmallBoldText>
+                                                <SmallBoldText color={colorTheme.GREY}>
+                                                    /{collection.minted_indexes_total}
+                                                </SmallBoldText>
                                             </FlexRow>
                                         </RightContentWrapper>
                                     </CollectionPriceContainer>
