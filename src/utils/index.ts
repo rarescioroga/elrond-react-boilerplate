@@ -20,7 +20,10 @@ export const isCollectionFullyMinted = (collection: any) => {
 };
 
 export const getCollectionImageSrc = (collection: any) => {
-    return `https://devnet-media.elrond.com/nfts/asset/${collection.image_base_cid}/1.png`;
+    const nftCount = Number(collection.amount_of_tokens_total);
+    const imagesCount = nftCount < 45 ? nftCount : 45;
+    const randomIndex = Math.floor(imagesCount / 10);
+    return `https://devnet-media.elrond.com/nfts/asset/${collection.image_base_cid}/${randomIndex}.png`;
 };
 
 export const stringToHex = (str: string) => {

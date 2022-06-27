@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import useCollections from '../../common/redux/hooks/useCollections';
 import { NftCard, TitleText } from '@haos-labs/tesserae-utils';
 import { useNavigate } from 'react-router-dom';
+import { getCollectionImageSrc } from '../../utils';
 
 const Wrapper = styled.div`
     display: flex;
@@ -39,7 +40,7 @@ const LiveCollectionsList: React.FC = () => {
                 {liveCollections.map((collection: any, index: any) => (
                     <div onClick={() => goToCollectionDetails(collection)} key={`live-collection-${index}`}>
                         <NftCard
-                            imageUrl={`https://devnet-media.elrond.com/nfts/asset/${collection.image_base_cid}/1.png`}
+                            imageUrl={getCollectionImageSrc(collection)}
                             title={collection.token_name}
                             subtitle={`By ${collection.shop_name}`}
                             price={Number(collection.selling_price)}
@@ -49,6 +50,7 @@ const LiveCollectionsList: React.FC = () => {
                             totalItemsCount={Number(collection.amount_of_tokens_total)}
                             wrapperStyle={{ marginRight: 26, minWidth: 325 }}
                             hoverAnimation
+                            isLive
                         />
                     </div>
                 ))}

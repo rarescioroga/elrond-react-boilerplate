@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import { ScreenWrapper, BaseFlexRow } from '../../common/styles';
-import { getCollectionImageSrc } from '../../utils';
+import { getCollectionImageSrc, isCollectionFullyMinted } from '../../utils';
 import { useNavigate, useParams } from 'react-router-dom';
 import useCollections from '../../common/redux/hooks/useCollections';
 import useNft from '../../common/redux/hooks/useNft';
@@ -42,6 +42,7 @@ const MyCollectionDetail: React.FC = () => {
     const [collection, setCollection] = useState<any>(null);
     const { shopTheme } = useShop(collection?.shop_name);
     const { withdrawNft } = useTransactions();
+    const isCollectionMinted = collection ? isCollectionFullyMinted(collection) : false;
 
     if (shopTheme) {
         theme = shopTheme;
@@ -93,12 +94,14 @@ const MyCollectionDetail: React.FC = () => {
                                                     Verified
                                                 </MediumLargeBoldText>
                                             </LeftContentWrapper>
-                                            <MainButton
-                                                theme={theme}
-                                                onClick={() => goToMyNftDetailScreen(nft.identifier)}
-                                            >
-                                                List now
-                                            </MainButton>
+                                            {isCollectionMinted && (
+                                                <MainButton
+                                                    theme={theme}
+                                                    onClick={() => goToMyNftDetailScreen(nft.identifier)}
+                                                >
+                                                    List now
+                                                </MainButton>
+                                            )}
                                         </>
                                     )}
 
