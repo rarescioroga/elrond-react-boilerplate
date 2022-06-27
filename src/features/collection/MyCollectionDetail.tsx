@@ -41,7 +41,7 @@ const MyCollectionDetail: React.FC = () => {
     const { myNfts } = useNft(collectionId || '');
     const [collection, setCollection] = useState<any>(null);
     const { shopTheme } = useShop(collection?.shop_name);
-    const { withdrawNft } = useTransactions();
+    const { withdrawNft, mintNft } = useTransactions();
     const isCollectionMinted = collection ? isCollectionFullyMinted(collection) : false;
 
     if (shopTheme) {
@@ -50,6 +50,12 @@ const MyCollectionDetail: React.FC = () => {
 
     const goToMyNftDetailScreen = (nftId: string) => {
         navigate(`./nft/${nftId}`);
+    };
+
+    const onMintNft = async () => {
+        if (collection) {
+            await mintNft(collection.token_name, Number(collection.selling_price));
+        }
     };
 
     useEffect(() => {
@@ -70,6 +76,7 @@ const MyCollectionDetail: React.FC = () => {
                     collection={collection}
                     theme={theme}
                     logoSrc="https://i.pinimg.com/280x280_RS/81/a7/ce/81a7ce9d3bc250bd44fae2b7f188c685.jpg"
+                    onBuyClick={onMintNft}
                 />
                 <CollectionsGridLayout style={{ marginTop: 25 }}>
                     {myNfts.map((nft: any, index: any) => (
