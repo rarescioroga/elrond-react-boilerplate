@@ -4,7 +4,7 @@ import { loginServices, useGetAccountInfo, useGetLoginInfo } from '@elrondnetwor
 import { MediumLargeRegularText, MainButton } from '@haos-labs/tesserae-utils';
 
 import accountPlaceholder from '../../../assets/account-placeholder.png';
-import { colorTheme } from '../../../constants/colors';
+import { baseTheme } from '../../../constants/colors';
 import { shortenWalletAddress } from '../../../utils';
 import AccountBalancePopup from '../../AccountBalancePopup';
 import { Theme } from '../../models';
@@ -30,11 +30,6 @@ const AccountImage = styled.img`
     margin-right: 24px;
 `;
 
-const buttonTheme = {
-    primary: colorTheme.ORANGE,
-    secondary: colorTheme.WHITE,
-};
-
 const AuthButton: React.FC<Props> = ({ overrideTheme }) => {
     const accountInfo = useGetAccountInfo();
     const { isLoggedIn } = useGetLoginInfo();
@@ -43,7 +38,7 @@ const AuthButton: React.FC<Props> = ({ overrideTheme }) => {
         callbackRoute: '/',
         redirectAfterLogin: true,
     });
-    const themeToUse = overrideTheme ?? buttonTheme;
+    const themeToUse = overrideTheme ?? baseTheme;
     const wrapperRef = useRef(null);
 
     const handleLogin = () => {
@@ -75,10 +70,10 @@ const AuthButton: React.FC<Props> = ({ overrideTheme }) => {
             {isLoggedIn && (
                 <AccountContainer ref={wrapperRef} onClick={() => setShowAccountPopup(true)}>
                     <AccountImage src={accountPlaceholder} />
-                    <MediumLargeRegularText color={colorTheme.ORANGE}>
+                    <MediumLargeRegularText color={themeToUse.primary}>
                         {shortenWalletAddress(accountInfo.address)}
                     </MediumLargeRegularText>
-                    {showAccountPopup && <AccountBalancePopup />}
+                    {showAccountPopup && <AccountBalancePopup overrideTheme={themeToUse} />}
                 </AccountContainer>
             )}
         </>

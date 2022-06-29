@@ -1,9 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 import { MediumLargeBoldText, MediumRegularText } from '@haos-labs/tesserae-utils';
-import { colorTheme } from '../constants/colors';
+import { baseTheme, colorTheme } from '../constants/colors';
 import { logout, useGetAccountInfo } from '@elrondnetwork/dapp-core';
 import { TokenPayment } from '@elrondnetwork/erdjs/out';
+import { Theme } from './models';
+
+type Props = {
+    overrideTheme?: Theme;
+};
 
 const Wrapper = styled.div`
     position: absolute;
@@ -28,8 +33,9 @@ const Divider = styled.div`
     background-color: ${colorTheme.LIGHT_GREY};
 `;
 
-const AccountBalancePopup: React.FC = () => {
+const AccountBalancePopup: React.FC<Props> = ({ overrideTheme }) => {
     const { account } = useGetAccountInfo();
+    const themeToUse = overrideTheme ?? baseTheme;
 
     const handleLogout = () => {
         logout(`${window.location.origin}/`);
@@ -40,7 +46,7 @@ const AccountBalancePopup: React.FC = () => {
             <MediumRegularText color={colorTheme.GREY} extraCss="margin-bottom: 6px;">
                 Balance
             </MediumRegularText>
-            <MediumLargeBoldText fontSize={20} color={colorTheme.ORANGE} extraCss="margin-bottom: 18px;">
+            <MediumLargeBoldText fontSize={20} color={themeToUse.primary} extraCss="margin-bottom: 18px;">
                 {Number(TokenPayment.egldFromBigInteger(account.balance).toRationalNumber()).toFixed(3)} EGLD
             </MediumLargeBoldText>
             <Divider />
