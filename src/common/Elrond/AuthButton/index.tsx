@@ -7,8 +7,13 @@ import accountPlaceholder from '../../../assets/account-placeholder.png';
 import { colorTheme } from '../../../constants/colors';
 import { shortenWalletAddress } from '../../../utils';
 import AccountBalancePopup from '../../AccountBalancePopup';
+import { Theme } from '../../models';
 
 const { useExtensionLogin } = loginServices;
+
+type Props = {
+    overrideTheme?: Theme;
+};
 
 const AccountContainer = styled.div`
     position: relative;
@@ -30,7 +35,7 @@ const buttonTheme = {
     secondary: colorTheme.WHITE,
 };
 
-const AuthButton: React.FC = () => {
+const AuthButton: React.FC<Props> = ({ overrideTheme }) => {
     const accountInfo = useGetAccountInfo();
     const { isLoggedIn } = useGetLoginInfo();
     const [showAccountPopup, setShowAccountPopup] = useState(false);
@@ -38,6 +43,7 @@ const AuthButton: React.FC = () => {
         callbackRoute: '/',
         redirectAfterLogin: true,
     });
+    const themeToUse = overrideTheme ?? buttonTheme;
     const wrapperRef = useRef(null);
 
     const handleLogin = () => {
@@ -62,7 +68,7 @@ const AuthButton: React.FC = () => {
     return (
         <>
             {!isLoggedIn && (
-                <MainButton onClick={handleLogin} theme={buttonTheme}>
+                <MainButton onClick={handleLogin} theme={themeToUse}>
                     Connect Wallet
                 </MainButton>
             )}

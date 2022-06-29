@@ -62,7 +62,7 @@ const SearchBarHeader = () => {
                     My Collections
                 </MainButton>
             )}
-            <AuthButton />
+            <AuthButton overrideTheme={buttonTheme} />
         </Wrapper>
     );
 };

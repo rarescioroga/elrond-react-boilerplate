@@ -16,7 +16,7 @@ export const HeaderWrapper = styled.div`
     max-width: 1500px;
     width: calc(100% - 64px);
     background-color: white;
-    z-index: 1;
+    z-index: 2;
 `;
 
 export const ComponentsWrapper = styled.div`
