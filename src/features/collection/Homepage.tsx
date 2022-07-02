@@ -9,6 +9,7 @@ import useSearchFilter from '../../common/redux/hooks/useSearchFilter';
 import useCollections from '../../common/redux/hooks/useCollections';
 import { colorTheme } from '../../constants/colors';
 import { ScreenWrapper } from '../../common/styles';
+import { useGetLoginInfo } from '@elrondnetwork/dapp-core/hooks';
 
 const MainContentWrapper = styled.div`
     width: calc(100% - 300px);
@@ -21,6 +22,7 @@ const MainContentWrapper = styled.div`
 
 const Homepage: React.FC = () => {
     const { searchFilter } = useSearchFilter();
+    const { isLoggedIn } = useGetLoginInfo();
     const { availableCollections, allFilteredCollections } = useCollections();
 
     return (

@@ -12,7 +12,8 @@ import {
     TransactionPayload,
     U64Value,
 } from '@elrondnetwork/erdjs/out';
-import { sendTransactions, useGetAccountInfo } from '@elrondnetwork/dapp-core';
+import { useGetAccountInfo } from '@elrondnetwork/dapp-core/hooks/account';
+import { sendTransactions } from '@elrondnetwork/dapp-core/services';
 
 import { chainID, smartContractAddress, smartContractImplementationInterface } from '../../../config';
 import haosCardsJson from '../../../assets/haos-cards-sc.abi.json';

@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useQuery } from 'react-query';
-import { useGetAccountInfo } from '@elrondnetwork/dapp-core';
+import { useGetAccountInfo } from '@elrondnetwork/dapp-core/hooks/account';
+
 import { getListedNfts, getNftsByAccountAndAddress } from '../api/nft';
 import { selectMyNfts, selectNftById, setMyNfts } from '../slices/myCollectionSlice';
 

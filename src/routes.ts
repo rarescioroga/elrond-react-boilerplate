@@ -38,6 +38,7 @@ export const routeNames = {
     myCollectionsDetail: '/my-collections/:collectionId',
     collectionDetail: '/collection/:collectionId',
     myNftDetail: '/my-collections/:collectionId/nft/:nftId',
+    walletconnect: '/walletconnect',
 };
 
 const mappedRoutes = routes.map((route) => {

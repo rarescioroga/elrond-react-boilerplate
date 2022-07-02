@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import useCollections from '../../common/redux/hooks/useCollections';
 import { NftCard, TitleText } from '@haos-labs/tesserae-utils';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { getCollectionImageSrc } from '../../utils';
 
 const Wrapper = styled.div`
@@ -27,18 +27,17 @@ const CollectionsRow = styled.div`
 
 const LiveCollectionsList: React.FC = () => {
     const { liveCollections } = useCollections();
-    const navigate = useNavigate();
-
-    const goToCollectionDetails = (collection: any) => {
-        navigate('./collection/' + collection.nft_token_id);
-    };
 
     return (
         <Wrapper>
             <TitleText extraCss="margin: 56px 0 49px 0;">Live Collections</TitleText>
             <CollectionsRow>
                 {liveCollections.map((collection: any, index: any) => (
-                    <div onClick={() => goToCollectionDetails(collection)} key={`live-collection-${index}`}>
+                    <Link
+                        to={'./collection/' + collection.nft_token_id}
+                        key={`live-collection-${index}`}
+                        style={{ textDecoration: 'none' }}
+                    >
                         <NftCard
                             imageUrl={getCollectionImageSrc(collection)}
                             title={collection.token_name}
@@ -52,7 +51,7 @@ const LiveCollectionsList: React.FC = () => {
                             hoverAnimation
                             isLive
                         />
-                    </div>
+                    </Link>
                 ))}
             </CollectionsRow>
         </Wrapper>

@@ -2,7 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { MediumLargeBoldText, MediumRegularText } from '@haos-labs/tesserae-utils';
 import { baseTheme, colorTheme } from '../constants/colors';
-import { logout, useGetAccountInfo } from '@elrondnetwork/dapp-core';
+import { useGetAccountInfo } from '@elrondnetwork/dapp-core/hooks/account';
+import { logout } from '@elrondnetwork/dapp-core/utils';
 import { TokenPayment } from '@elrondnetwork/erdjs/out';
 import { Theme } from './models';
 
