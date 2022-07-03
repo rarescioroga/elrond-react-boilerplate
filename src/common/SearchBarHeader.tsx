@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useGetLoginInfo } from '@elrondnetwork/dapp-core';
+import { useGetLoginInfo } from '@elrondnetwork/dapp-core/hooks/account';
 import { MainButton } from '@haos-labs/tesserae-utils';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -62,7 +62,7 @@ const SearchBarHeader = () => {
                     My Collections
                 </MainButton>
             )}
-            <AuthButton />
+            <AuthButton overrideTheme={buttonTheme} />
         </Wrapper>
     );
 };

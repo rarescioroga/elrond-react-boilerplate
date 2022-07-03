@@ -1,14 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { loginServices, useGetAccountInfo, useGetLoginInfo } from '@elrondnetwork/dapp-core';
 import { MediumLargeRegularText, MainButton } from '@haos-labs/tesserae-utils';
+import { useGetAccountInfo, useGetLoginInfo } from '@elrondnetwork/dapp-core/hooks/account';
 
+import ConnectWalletModal from '../ConnectWalletModal';
 import accountPlaceholder from '../../../assets/account-placeholder.png';
-import { colorTheme } from '../../../constants/colors';
+import { baseTheme } from '../../../constants/colors';
 import { shortenWalletAddress } from '../../../utils';
 import AccountBalancePopup from '../../AccountBalancePopup';
+import { Theme } from '../../models';
 
-const { useExtensionLogin } = loginServices;
+type Props = {
+    overrideTheme?: Theme;
+};
 
 const AccountContainer = styled.div`
     position: relative;
@@ -25,24 +29,13 @@ const AccountImage = styled.img`
     margin-right: 24px;
 `;
 
-const buttonTheme = {
-    primary: colorTheme.ORANGE,
-    secondary: colorTheme.WHITE,
-};
-
-const AuthButton: React.FC = () => {
+const AuthButton: React.FC<Props> = ({ overrideTheme }) => {
     const accountInfo = useGetAccountInfo();
     const { isLoggedIn } = useGetLoginInfo();
     const [showAccountPopup, setShowAccountPopup] = useState(false);
-    const [onInitiateLogin] = useExtensionLogin({
-        callbackRoute: '/',
-        redirectAfterLogin: true,
-    });
+    const [showConnectModal, setShowConnectModal] = useState(false);
+    const themeToUse = overrideTheme ?? baseTheme;
     const wrapperRef = useRef(null);
-
-    const handleLogin = () => {
-        onInitiateLogin();
-    };
 
     useEffect(() => {
         const handleClickOutside = (event: { target: any }) => {
@@ -62,19 +55,20 @@ const AuthButton: React.FC = () => {
     return (
         <>
             {!isLoggedIn && (
-                <MainButton onClick={handleLogin} theme={buttonTheme}>
+                <MainButton onClick={() => setShowConnectModal(true)} theme={themeToUse}>
                     Connect Wallet
                 </MainButton>
             )}
             {isLoggedIn && (
                 <AccountContainer ref={wrapperRef} onClick={() => setShowAccountPopup(true)}>
                     <AccountImage src={accountPlaceholder} />
-                    <MediumLargeRegularText color={colorTheme.ORANGE}>
+                    <MediumLargeRegularText color={themeToUse.primary}>
                         {shortenWalletAddress(accountInfo.address)}
                     </MediumLargeRegularText>
-                    {showAccountPopup && <AccountBalancePopup />}
+                    {showAccountPopup && <AccountBalancePopup overrideTheme={themeToUse} />}
                 </AccountContainer>
             )}
+            <ConnectWalletModal theme={themeToUse} open={showConnectModal} onClose={() => setShowConnectModal(false)} />
         </>
     );
 };

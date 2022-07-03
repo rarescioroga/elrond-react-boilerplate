@@ -965,36 +965,54 @@
     "events": [],
     "hasCallback": true,
     "types": {
-        "Auction": {
+        "EsdtToken": {
             "type": "struct",
             "fields": [
                 {
-                    "name": "auctioned_token",
-                    "type": "EsdtToken"
+                    "name": "token_type",
+                    "type": "TokenIdentifier"
                 },
                 {
-                    "name": "requested_amount",
-                    "type": "BigUint"
-                },
-                {
-                    "name": "start_time",
+                    "name": "nonce",
                     "type": "u64"
+                }
+            ]
+        },
+        "CardType": {
+            "type": "enum",
+            "variants": [
+                {
+                    "name": "OnePerWeek",
+                    "discriminant": 0
                 },
                 {
-                    "name": "original_owner",
-                    "type": "Address"
+                    "name": "ThreePerWeek",
+                    "discriminant": 1
                 },
                 {
-                    "name": "current_winner",
-                    "type": "Address"
+                    "name": "FivePerWeek",
+                    "discriminant": 2
                 },
                 {
-                    "name": "marketplace_cut_percentage",
-                    "type": "BigUint"
+                    "name": "FiftyConsumable",
+                    "discriminant": 3
+                }
+            ]
+        },
+        "CollectionStatus": {
+            "type": "enum",
+            "variants": [
+                {
+                    "name": "Undefined",
+                    "discriminant": 0
                 },
                 {
-                    "name": "creator_royalties_percentage",
-                    "type": "BigUint"
+                    "name": "Active",
+                    "discriminant": 1
+                },
+                {
+                    "name": "Inactive",
+                    "discriminant": 2
                 }
             ]
         },
@@ -1167,57 +1185,6 @@
                 }
             ]
         },
-        "CardType": {
-            "type": "enum",
-            "variants": [
-                {
-                    "name": "OnePerWeek",
-                    "discriminant": 0
-                },
-                {
-                    "name": "ThreePerWeek",
-                    "discriminant": 1
-                },
-                {
-                    "name": "FivePerWeek",
-                    "discriminant": 2
-                },
-                {
-                    "name": "FiftyConsumable",
-                    "discriminant": 3
-                }
-            ]
-        },
-        "CollectionStatus": {
-            "type": "enum",
-            "variants": [
-                {
-                    "name": "Undefined",
-                    "discriminant": 0
-                },
-                {
-                    "name": "Active",
-                    "discriminant": 1
-                },
-                {
-                    "name": "Inactive",
-                    "discriminant": 2
-                }
-            ]
-        },
-        "EsdtToken": {
-            "type": "struct",
-            "fields": [
-                {
-                    "name": "token_type",
-                    "type": "TokenIdentifier"
-                },
-                {
-                    "name": "nonce",
-                    "type": "u64"
-                }
-            ]
-        },
         "ScanInfo": {
             "type": "struct",
             "fields": [
@@ -1299,6 +1266,39 @@
                 {
                     "name": "Admin",
                     "discriminant": 3
+                }
+            ]
+        },
+        "Auction": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "auctioned_token",
+                    "type": "EsdtToken"
+                },
+                {
+                    "name": "requested_amount",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "start_time",
+                    "type": "u64"
+                },
+                {
+                    "name": "original_owner",
+                    "type": "Address"
+                },
+                {
+                    "name": "current_winner",
+                    "type": "Address"
+                },
+                {
+                    "name": "marketplace_cut_percentage",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "creator_royalties_percentage",
+                    "type": "BigUint"
                 }
             ]
         }

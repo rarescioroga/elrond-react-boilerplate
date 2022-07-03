@@ -43,7 +43,6 @@ const NftDetail = () => {
     const { myNfts, nftDetails } = useNft(collectionId || '', nftId);
     const [collection, setCollection] = useState<any>(null);
 
-    console.log('LOGGER nftId ------------------->> ', nftDetails, myNfts);
     useEffect(() => {
         if (collectionId) {
             setCollection(getCollectionById(collectionId));

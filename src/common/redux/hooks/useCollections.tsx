@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
 import { useQuery } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
+import { useGetAccountInfo } from '@elrondnetwork/dapp-core/hooks/account';
 
 import { getAvailableCollections, getLiveCollections, getWalletCollections } from '../api/collection';
 import { selectLiveCollections, setLiveCollections } from '../slices/liveCollectionsSlice';
 import { selectAvailableCollections, setAvailableCollections } from '../slices/availableCollectionsSlice';
 import { selectMyCollections, setMyCollections } from '../slices/myCollectionSlice';
 import useSearchFilter from './useSearchFilter';
-import { useGetAccountInfo } from '@elrondnetwork/dapp-core';
 
 const useCollections = () => {
     const { searchFilter } = useSearchFilter();

@@ -1,16 +1,12 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { DappProvider } from '@elrondnetwork/dapp-core';
-import { DappUI, AuthenticatedRoutesWrapper } from '@elrondnetwork/dapp-core';
+import { DappProvider, AuthenticatedRoutesWrapper } from '@elrondnetwork/dapp-core/wrappers';
+import { TransactionsToastList, SignTransactionsModals, NotificationModal } from '@elrondnetwork/dapp-core/UI';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
 import SearchBarHeader from './common/SearchBarHeader';
 import { routeNames, routes } from './routes';
 import { HeaderWrapper, ScreenWrapper, ComponentsWrapper } from './common/styles';
-
-import '@elrondnetwork/dapp-core/dist/index.css';
-
-const { NotificationModal, TransactionsToastList, SignTransactionsModals } = DappUI;
 
 const environment = process.env.REACT_APP_ENVIRONMENT;
 
@@ -25,8 +21,11 @@ const queryClient = new QueryClient({
 const App = () => {
     return (
         <QueryClientProvider client={queryClient}>
-            <DappProvider environment={environment}>
-                <BrowserRouter>
+            <BrowserRouter>
+                <DappProvider
+                    environment={environment}
+                    customNetworkConfig={{ name: 'customConfig', apiTimeout: 6000 }}
+                >
                     <AuthenticatedRoutesWrapper routes={routes} unlockRoute={routeNames.home}>
                         <ScreenWrapper>
                             <TransactionsToastList />
@@ -48,8 +47,8 @@ const App = () => {
                             </ComponentsWrapper>
                         </ScreenWrapper>
                     </AuthenticatedRoutesWrapper>
-                </BrowserRouter>
-            </DappProvider>
+                </DappProvider>
+            </BrowserRouter>
         </QueryClientProvider>
     );
 };

@@ -5,3 +5,8 @@ export const colorTheme = {
     GREY: '#A5AAC1',
     ORANGE: '#DF6348',
 };
+
+export const baseTheme = {
+    primary: colorTheme.ORANGE,
+    secondary: colorTheme.WHITE,
+};
