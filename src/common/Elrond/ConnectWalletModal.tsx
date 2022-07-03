@@ -1,12 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { MainButton, MediumLargeRegularText } from '@haos-labs/tesserae-utils';
-import { useExtensionLogin, useWalletConnectLogin } from '@elrondnetwork/dapp-core/hooks/login';
+import { useExtensionLogin } from '@elrondnetwork/dapp-core/hooks/login';
 
 import iconLogo from '../../assets/icons/icon-logo.png';
 import { Theme } from '../models';
 import { colorTheme } from '../../constants/colors';
-import { useGetLoginInfo } from '@elrondnetwork/dapp-core/hooks';
 import { setExternalProviderAsAccountProvider } from '@elrondnetwork/dapp-core/providers/accountProvider';
 
 type Props = {
@@ -37,24 +36,14 @@ const Logo = styled.img`
 
 const ConnectWalletModal: React.FC<Props> = ({ theme, open, onClose }) => {
     const wrapperRef = useRef(null);
-    const { isLoggedIn } = useGetLoginInfo();
     const [onInitiateLogin] = useExtensionLogin({
         callbackRoute: '/',
         redirectAfterLogin: true,
-    });
-    const [onInitiateMaiarLogin] = useWalletConnectLogin({
-        callbackRoute: '/',
-        redirectAfterLogin: true,
-        logoutRoute: `${window.location.origin}/`,
     });
 
     const handleExtensionLogin = () => {
         onInitiateLogin();
     };
-
-    useEffect(() => {
-        onInitiateMaiarLogin();
-    }, []);
 
     useEffect(() => {
         setExternalProviderAsAccountProvider();
@@ -75,6 +64,7 @@ const ConnectWalletModal: React.FC<Props> = ({ theme, open, onClose }) => {
     if (!open) {
         return null;
     }
+
     return (
         <Wrapper ref={wrapperRef}>
             <Logo src={iconLogo} />
