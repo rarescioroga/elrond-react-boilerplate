@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import { ScreenWrapper } from '../../common/styles';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import useCollections from '../../common/redux/hooks/useCollections';
 import useNft from '../../common/redux/hooks/useNft';
 import ListNftInput from './components/ListNftInput';
@@ -21,11 +21,10 @@ const Container = styled(ScreenWrapper)`
 `;
 
 const NftDetail = () => {
-    const navigate = useNavigate();
     const { address } = useGetAccountInfo();
     const { collectionId, nftId } = useParams();
     const { getCollectionById, allCollections } = useCollections();
-    const { myNfts, nftDetails } = useNft(collectionId || '', nftId);
+    const { nftDetails } = useNft(collectionId || '', nftId);
     const { withdrawNft } = useTransactions();
     const [collection, setCollection] = useState<any>(null);
     const isListed = nftDetails && nftDetails.listing_price;
@@ -34,7 +33,6 @@ const NftDetail = () => {
 
     const onWithdrawNft = async () => {
         await withdrawNft(nftDetails);
-        navigate('../..');
     };
 
     useEffect(() => {
@@ -46,7 +44,6 @@ const NftDetail = () => {
     if (!collection || !nftDetails) {
         return null;
     }
-    console.log('LOGGER nftDetails', isUserOwner);
 
     return (
         <ScreenWrapper>
