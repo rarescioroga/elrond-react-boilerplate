@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { CollectionDescriptionContainer } from '@haos-labs/tesserae-utils';
 
 import { BaseFlexRow, ScreenWrapper } from '../../common/styles';
 import { useParams } from 'react-router-dom';
 import useCollections from '../../common/redux/hooks/useCollections';
-import { getCollectionImageSrc } from '../../utils';
 import useNft from '../../common/redux/hooks/useNft';
 import ListNftInput from './components/ListNftInput';
+import { getCollectionImageSrc } from '../../utils';
+import { CollectionBanner } from '@haos-labs/tesserae-utils';
 
 const Container = styled(ScreenWrapper)`
     display: flex;
@@ -61,15 +61,12 @@ const NftDetail = () => {
                         <Image src={nftDetails?.url} />
                     </LeftContent>
                     <RightContent>
-                        <CollectionDescriptionContainer
-                            title={collection.token_name}
-                            subtitle={`By ${collection.shop_name}`}
-                            detailsTitle="Benefits"
-                            details={collection.description}
+                        <CollectionBanner
+                            collection={collection}
+                            bannerSrc={getCollectionImageSrc(collection)}
                             logoSrc="https://i.pinimg.com/280x280_RS/81/a7/ce/81a7ce9d3bc250bd44fae2b7f188c685.jpg"
-                        >
-                            <ListNftInput collection={collection} nft={nftDetails} />
-                        </CollectionDescriptionContainer>
+                        />
+                        <ListNftInput collection={collection} nft={nftDetails} />
                     </RightContent>
                 </BaseFlexRow>
             </Container>

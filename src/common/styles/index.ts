@@ -26,4 +26,5 @@ export const ComponentsWrapper = styled.div`
 export const BaseFlexRow = styled.div`
     display: flex;
     flex-direction: row;
+    width: 100%;
 `;

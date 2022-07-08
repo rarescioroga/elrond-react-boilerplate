@@ -6,13 +6,15 @@ import {
     NftCard,
     SmallRegularText,
     CollectionPriceContainer,
-    ImageAndBenefits,
     MainButton,
+    CollectionBanner,
+    Benefits,
+    ActionItemButton,
 } from '@haos-labs/tesserae-utils';
 
 import useCollections from '../../common/redux/hooks/useCollections';
 import useShop from '../../common/redux/hooks/useShop';
-import { ScreenWrapper } from '../../common/styles';
+import { BaseFlexRow, ScreenWrapper } from '../../common/styles';
 import { getCollectionImageSrc, isCollectionFullyMinted } from '../../utils';
 import { colorTheme } from '../../constants/colors';
 import { CollectionsGridLayout, LeftContentWrapper } from '../../common/styles/nftStyles';
@@ -27,6 +29,10 @@ const Container = styled(ScreenWrapper)`
     max-width: 1227px;
     width: 100%;
     margin-top: 70px;
+`;
+
+const MarginTopRow = styled(BaseFlexRow)`
+    margin-top: 25px;
 `;
 
 let theme = {
@@ -67,13 +73,22 @@ const CollectionDetails: React.FC = () => {
     return (
         <ScreenWrapper>
             <Container>
-                <ImageAndBenefits
-                    imageSrc={getCollectionImageSrc(collection)}
+                <CollectionBanner
                     collection={collection}
-                    theme={theme}
-                    onBuyClick={onMintNft}
+                    bannerSrc={getCollectionImageSrc(collection)}
                     logoSrc="https://i.pinimg.com/280x280_RS/81/a7/ce/81a7ce9d3bc250bd44fae2b7f188c685.jpg"
                 />
+                <MarginTopRow>
+                    <Benefits collection={collection} wrapperStyle={{ marginRight: 25 }} />
+                    <ActionItemButton
+                        label="Item price"
+                        price={collection.price}
+                        onClick={onMintNft}
+                        buttonLabel="Mint Now"
+                        theme={theme}
+                        wrapperStyle={{ width: 390, height: 54 }}
+                    />
+                </MarginTopRow>
                 {isMintDone && nftList && (
                     <CollectionsGridLayout style={{ marginTop: 25 }}>
                         {nftList.map((nft: any, index: any) => {

@@ -7,8 +7,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import useCollections from '../../common/redux/hooks/useCollections';
 import useNft from '../../common/redux/hooks/useNft';
 import {
+    CollectionBanner,
     CollectionPriceContainer,
-    ImageAndBenefits,
     MainButton,
     MediumLargeBoldText,
     NftCard,
@@ -71,12 +71,10 @@ const MyCollectionDetail: React.FC = () => {
     return (
         <ScreenWrapper>
             <Container>
-                <ImageAndBenefits
-                    imageSrc={getCollectionImageSrc(collection)}
+                <CollectionBanner
                     collection={collection}
-                    theme={theme}
+                    bannerSrc={getCollectionImageSrc(collection)}
                     logoSrc="https://i.pinimg.com/280x280_RS/81/a7/ce/81a7ce9d3bc250bd44fae2b7f188c685.jpg"
-                    onBuyClick={onMintNft}
                 />
                 <CollectionsGridLayout style={{ marginTop: 25 }}>
                     {myNfts.map((nft: any, index: any) => (

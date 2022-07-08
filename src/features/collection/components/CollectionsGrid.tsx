@@ -51,10 +51,6 @@ const CollectionsGrid: React.FC<Props> = ({ collections, title }) => {
                             title={collection.token_name}
                             subtitle={`By ${collection.shop_name}`}
                             price={Number(collection.selling_price)}
-                            itemsRemaining={
-                                Number(collection.amount_of_tokens_total) - Number(collection.minted_indexes_total)
-                            }
-                            totalItemsCount={Number(collection.amount_of_tokens_total)}
                             wrapperStyle={{ marginRight: 26, marginBottom: 26 }}
                             hoverAnimation
                             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
