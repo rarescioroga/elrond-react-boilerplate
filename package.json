@@ -6,7 +6,7 @@
     "@elrondnetwork/dapp-core": "2.0.0-alpha.18",
     "@elrondnetwork/erdjs": "10.2.5",
     "@elrondnetwork/erdjs-network-providers": "^0.1.5",
-    "@haos-labs/tesserae-utils": "1.0.33",
+    "@haos-labs/tesserae-utils": "1.0.34",
     "@reduxjs/toolkit": "^1.8.2",
     "react": "18.1.0",
     "react-dom": "^18.1.0",

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { ScreenWrapper, BaseFlexRow } from '../../common/styles';
 import { getCollectionImageSrc, isCollectionFullyMinted } from '../../utils';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import useCollections from '../../common/redux/hooks/useCollections';
 import useNft from '../../common/redux/hooks/useNft';
 import {
@@ -78,16 +78,22 @@ const MyCollectionDetail: React.FC = () => {
                 />
                 <CollectionsGridLayout style={{ marginTop: 25 }}>
                     {myNfts.map((nft: any, index: any) => (
-                        <NftCard
-                            key={`nft-listed-${index}`}
-                            imageUrl={nft.url}
-                            title={nft.name}
-                            subtitle={`By ${collection.shop_name}`}
-                            price={Number(nft.listing_price)}
-                            wrapperStyle={{ marginRight: 26, marginBottom: 26 }}
-                            hoverAnimation
-                            largerWidth
-                        />
+                        <Link
+                            to={`./nft/${nft.identifier}`}
+                            key={`live-collection-${index}`}
+                            style={{ textDecoration: 'none' }}
+                        >
+                            <NftCard
+                                key={`nft-listed-${index}`}
+                                imageUrl={nft.url}
+                                title={nft.name}
+                                subtitle={`By ${collection.shop_name}`}
+                                price={Number(nft.listing_price)}
+                                wrapperStyle={{ marginRight: 26, marginBottom: 26 }}
+                                hoverAnimation
+                                largerWidth
+                            />
+                        </Link>
                     ))}
                 </CollectionsGridLayout>
             </Container>
