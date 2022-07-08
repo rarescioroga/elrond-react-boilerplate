@@ -88,45 +88,7 @@ const MyCollectionDetail: React.FC = () => {
                             price={Number(nft.listing_price)}
                             wrapperStyle={{ marginRight: 26, marginBottom: 26 }}
                             hoverAnimation
-                            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                            //@ts-ignore
                             largerWidth
-                            BottomContent={
-                                <CollectionPriceContainer backgroundColor={theme.secondary}>
-                                    {!nft.listing_price && (
-                                        <>
-                                            <LeftContentWrapper>
-                                                <SmallRegularText color={theme.primary}>Owner</SmallRegularText>
-                                                <MediumLargeBoldText color={theme.primary}>
-                                                    Verified
-                                                </MediumLargeBoldText>
-                                            </LeftContentWrapper>
-                                            {isCollectionMinted && (
-                                                <MainButton
-                                                    theme={theme}
-                                                    onClick={() => goToMyNftDetailScreen(nft.identifier)}
-                                                >
-                                                    List now
-                                                </MainButton>
-                                            )}
-                                        </>
-                                    )}
-
-                                    {nft.listing_price && (
-                                        <>
-                                            <LeftContentWrapper>
-                                                <SmallRegularText color={theme.primary}>Listed at</SmallRegularText>
-                                                <MediumLargeBoldText color={theme.primary}>
-                                                    {Number(nft.listing_price)} EGLD
-                                                </MediumLargeBoldText>
-                                            </LeftContentWrapper>
-                                            <MainButton theme={theme} onClick={() => withdrawNft(nft)}>
-                                                Withdraw
-                                            </MainButton>
-                                        </>
-                                    )}
-                                </CollectionPriceContainer>
-                            }
                         />
                     ))}
                 </CollectionsGridLayout>

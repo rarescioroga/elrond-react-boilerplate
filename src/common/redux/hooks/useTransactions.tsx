@@ -42,7 +42,7 @@ const useTransactions = () => {
     const listNft = async (nft: { identifier: string; nonce: number; collection: string }, price: number) => {
         const { nonce, identifier, collection: collectionId } = nft;
 
-        const interaction = abiRegistryContract.methods.listNft([price * ONE_EGLD, identifier]);
+        const interaction = await abiRegistryContract.methods.listNft([price * ONE_EGLD, identifier]);
         const tx = interaction
             .withSingleESDTNFTTransfer(TokenPayment.nonFungible(collectionId, nonce), new Address(address))
             .withValue(TokenPayment.egldFromAmount(0))

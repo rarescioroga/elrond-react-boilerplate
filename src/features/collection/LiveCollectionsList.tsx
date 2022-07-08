@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import useCollections from '../../common/redux/hooks/useCollections';
-import { NftCard, TitleText } from '@haos-labs/tesserae-utils';
+import { CollectionCard, NftCard, TitleText } from '@haos-labs/tesserae-utils';
 import { Link } from 'react-router-dom';
 import { getCollectionImageSrc } from '../../utils';
 
@@ -38,7 +38,7 @@ const LiveCollectionsList: React.FC = () => {
                         key={`live-collection-${index}`}
                         style={{ textDecoration: 'none' }}
                     >
-                        <NftCard
+                        <CollectionCard
                             imageUrl={getCollectionImageSrc(collection)}
                             title={collection.token_name}
                             subtitle={`By ${collection.shop_name}`}
