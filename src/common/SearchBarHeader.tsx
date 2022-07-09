@@ -4,7 +4,7 @@ import { useGetLoginInfo } from '@elrondnetwork/dapp-core/hooks/account';
 import { MainButton } from '@haos-labs/tesserae-utils';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import logo from '../assets/Logo.png';
+import logo from '../assets/logo.png';
 import SearchBar from './components/SearchBar';
 import AuthButton from './Elrond/AuthButton';
 import useSearchFilter from './redux/hooks/useSearchFilter';

@@ -91,7 +91,7 @@ const CollectionDetails: React.FC = () => {
                 </MarginTopRow>
                 {isMintDone && nftList && (
                     <CollectionsGridLayout style={{ marginTop: 25 }}>
-                        {nftList.map((nft: any, index: any) => {
+                        {nftList.map((nft: any, index: number) => {
                             return (
                                 <NftCard
                                     key={`nft-listed-${index}`}

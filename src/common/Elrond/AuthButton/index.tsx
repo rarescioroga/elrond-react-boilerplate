@@ -4,11 +4,11 @@ import { MediumLargeRegularText, MainButton } from '@haos-labs/tesserae-utils';
 import { useGetAccountInfo, useGetLoginInfo } from '@elrondnetwork/dapp-core/hooks/account';
 
 import ConnectWalletModal from '../ConnectWalletModal';
-import accountPlaceholder from '../../../assets/account-placeholder.png';
 import { baseTheme } from '../../../constants/colors';
 import { shortenWalletAddress } from '../../../utils';
 import AccountBalancePopup from '../../AccountBalancePopup';
 import { Theme } from '../../models';
+import UserIcon from '../../../assets/svg/User';
 
 type Props = {
     overrideTheme?: Theme;
@@ -20,13 +20,6 @@ const AccountContainer = styled.div`
     flex-direction: row;
     align-items: center;
     cursor: pointer;
-`;
-
-const AccountImage = styled.img`
-    height: 38px;
-    width: 38px;
-    border-radius: 50%;
-    margin-right: 24px;
 `;
 
 const AuthButton: React.FC<Props> = ({ overrideTheme }) => {
@@ -61,8 +54,8 @@ const AuthButton: React.FC<Props> = ({ overrideTheme }) => {
             )}
             {isLoggedIn && (
                 <AccountContainer ref={wrapperRef} onClick={() => setShowAccountPopup(true)}>
-                    <AccountImage src={accountPlaceholder} />
-                    <MediumLargeRegularText color={themeToUse.primary}>
+                    <UserIcon color={themeToUse.primary} />
+                    <MediumLargeRegularText color={themeToUse.primary} extraCss="margin-left: 17px;">
                         {shortenWalletAddress(accountInfo.address)}
                     </MediumLargeRegularText>
                     {showAccountPopup && <AccountBalancePopup overrideTheme={themeToUse} />}
