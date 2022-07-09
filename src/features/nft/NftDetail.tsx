@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-
-import { ScreenWrapper } from '../../common/styles';
+import { ActionItemButton, NftDetail as NftDetailContainer } from '@haos-labs/tesserae-utils';
+import { useGetAccountInfo } from '@elrondnetwork/dapp-core/hooks/account';
 import { useParams } from 'react-router-dom';
+
 import useCollections from '../../common/redux/hooks/useCollections';
 import useNft from '../../common/redux/hooks/useNft';
 import ListNftInput from './components/ListNftInput';
-import { ActionItemButton, NftDetail as NftDetailContainer } from '@haos-labs/tesserae-utils';
-import { useGetAccountInfo } from '@elrondnetwork/dapp-core/hooks/account';
 import useTransactions from '../../common/redux/hooks/useTransactions';
+import useShop from '../../common/redux/hooks/useShop';
+import { ScreenWrapper } from '../../common/styles';
 
 const Container = styled(ScreenWrapper)`
     display: flex;
@@ -27,6 +28,7 @@ const NftDetail = () => {
     const { nftDetails } = useNft(collectionId || '', nftId);
     const { withdrawNft } = useTransactions();
     const [collection, setCollection] = useState<any>(null);
+    const { shopTheme } = useShop(collection?.shop_name);
     const isListed = nftDetails && nftDetails.listing_price;
     const nftOwner = nftDetails && nftDetails.listed_by_wallet;
     const isUserOwner = nftOwner === address;
@@ -62,6 +64,7 @@ const NftDetail = () => {
                             buttonLabel="Cancel Listing"
                             onClick={onWithdrawNft}
                             wrapperStyle={{ marginTop: 40 }}
+                            theme={shopTheme}
                         />
                     )}
                 </NftDetailContainer>

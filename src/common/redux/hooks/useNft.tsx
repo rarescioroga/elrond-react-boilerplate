@@ -5,11 +5,13 @@ import { useGetAccountInfo } from '@elrondnetwork/dapp-core/hooks/account';
 
 import { getListedNfts, getNftsByAccountAndAddress } from '../api/nft';
 import { selectMyNfts, selectNftById, setMyNfts } from '../slices/myCollectionSlice';
+import { selectReFetchData } from '../slices/appConfigSlice';
 
 const useNft = (collectionId: string, nftId?: string) => {
     const { address } = useGetAccountInfo();
     const dispatch = useDispatch();
     const myNfts = useSelector(selectMyNfts);
+    const reFetchData = useSelector(selectReFetchData);
     const nftDetails = useSelector((state) => selectNftById(state, nftId));
     const [nftList, setNftList] = useState<any[]>([]);
 
@@ -18,8 +20,9 @@ const useNft = (collectionId: string, nftId?: string) => {
         () => getListedNfts(collectionId),
     );
 
-    const { isSuccess: isMyNftsFetchSuccess, data: myNftsData } = useQuery(['myNfts', address, collectionId], () =>
-        getNftsByAccountAndAddress(address, collectionId),
+    const { isSuccess: isMyNftsFetchSuccess, data: myNftsData } = useQuery(
+        ['myNfts', address, collectionId, reFetchData],
+        () => getNftsByAccountAndAddress(address, collectionId),
     );
 
     useEffect(() => {

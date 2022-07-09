@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { MainButton, MediumLargeRegularText } from '@haos-labs/tesserae-utils';
 import { useExtensionLogin, useWalletConnectLogin } from '@elrondnetwork/dapp-core/hooks/login';
 
-import iconLogo from '../../assets/icons/icon-logo.png';
+import iconLogo from '../../assets/icons/icon.png';
 import { Theme } from '../models';
 import { colorTheme } from '../../constants/colors';
 import { setExternalProviderAsAccountProvider } from '@elrondnetwork/dapp-core/providers/accountProvider';
