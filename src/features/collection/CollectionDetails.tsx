@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import {
     MediumLargeBoldText,
     NftCard,
@@ -46,7 +46,7 @@ const CollectionDetails: React.FC = () => {
     const { mintNft } = useTransactions();
     const [collection, setCollection] = useState<any>(null);
     const { shopTheme } = useShop(collection?.shop_name);
-    const { nftList } = useNft(collection?.nft_token_id);
+    const { listedNfts, isUserNftOwner } = useNft(collection?.nft_token_id);
     const { buyNft } = useTransactions();
     const isMintDone = collection && isCollectionFullyMinted(collection);
 
@@ -79,20 +79,26 @@ const CollectionDetails: React.FC = () => {
                     logoSrc="https://i.pinimg.com/280x280_RS/81/a7/ce/81a7ce9d3bc250bd44fae2b7f188c685.jpg"
                 />
                 <MarginTopRow>
-                    <Benefits collection={collection} wrapperStyle={{ marginRight: 25 }} />
-                    <ActionItemButton
-                        label="Item price"
-                        price={collection.price}
-                        onClick={onMintNft}
-                        buttonLabel="Mint Now"
-                        theme={theme}
-                        wrapperStyle={{ width: 390, height: 54 }}
-                    />
+                    <Benefits collection={collection} wrapperStyle={{ marginRight: isMintDone ? 0 : 25 }} />
+                    {!isMintDone && (
+                        <ActionItemButton
+                            label="Item price"
+                            price={collection.price}
+                            onClick={onMintNft}
+                            buttonLabel="Mint Now"
+                            theme={theme}
+                            wrapperStyle={{ width: 390, height: 54 }}
+                        />
+                    )}
                 </MarginTopRow>
-                {isMintDone && nftList && (
+                {isMintDone && listedNfts && (
                     <CollectionsGridLayout style={{ marginTop: 25 }}>
-                        {nftList.map((nft: any, index: number) => {
-                            return (
+                        {listedNfts.filter(isUserNftOwner).map((nft: any, index: number) => (
+                            <Link
+                                to={`./nft/${nft.identifier}/listed`}
+                                key={`listed-nft-${index}`}
+                                style={{ textDecoration: 'none' }}
+                            >
                                 <NftCard
                                     key={`nft-listed-${index}`}
                                     imageUrl={nft.url}
@@ -101,8 +107,6 @@ const CollectionDetails: React.FC = () => {
                                     price={Number(nft.listing_price)}
                                     wrapperStyle={{ marginRight: 26, marginBottom: 26 }}
                                     hoverAnimation
-                                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                                    //@ts-ignore
                                     largerWidth
                                     BottomContent={
                                         <CollectionPriceContainer backgroundColor={theme.secondary}>
@@ -118,8 +122,8 @@ const CollectionDetails: React.FC = () => {
                                         </CollectionPriceContainer>
                                     }
                                 />
-                            );
-                        })}
+                            </Link>
+                        ))}
                     </CollectionsGridLayout>
                 )}
             </Container>

@@ -47,7 +47,7 @@ const LiveCollectionsList: React.FC = () => {
                                 Number(collection.amount_of_tokens_total) - Number(collection.minted_indexes_total)
                             }
                             totalItemsCount={Number(collection.amount_of_tokens_total)}
-                            wrapperStyle={{ marginRight: 26, minWidth: 325 }}
+                            wrapperStyle={{ marginRight: 26 }}
                             hoverAnimation
                             isLive
                         />

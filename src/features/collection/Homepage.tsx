@@ -57,7 +57,6 @@ const banners = [
 
 const Homepage: React.FC = () => {
     const { searchFilter } = useSearchFilter();
-    const { isLoggedIn } = useGetLoginInfo();
     const { availableCollections, allFilteredCollections } = useCollections();
 
     return (

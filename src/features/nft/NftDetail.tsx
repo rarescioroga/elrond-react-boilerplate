@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { ActionItemButton, NftDetail as NftDetailContainer } from '@haos-labs/tesserae-utils';
 import { useGetAccountInfo } from '@elrondnetwork/dapp-core/hooks/account';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams, useSearchParams } from 'react-router-dom';
 
 import useCollections from '../../common/redux/hooks/useCollections';
 import useNft from '../../common/redux/hooks/useNft';
@@ -22,19 +22,26 @@ const Container = styled(ScreenWrapper)`
 `;
 
 const NftDetail = () => {
+    const { pathname } = useLocation();
     const { address } = useGetAccountInfo();
     const { collectionId, nftId } = useParams();
     const { getCollectionById, allCollections } = useCollections();
-    const { nftDetails } = useNft(collectionId || '', nftId);
-    const { withdrawNft } = useTransactions();
+    const { myNftDetails, listedNftDetails } = useNft(collectionId || '', nftId);
+    const { withdrawNft, buyNft } = useTransactions();
     const [collection, setCollection] = useState<any>(null);
     const { shopTheme } = useShop(collection?.shop_name);
+    const isListedByOtherUser = pathname.includes('/listed');
+    const nftDetails = isListedByOtherUser ? listedNftDetails : myNftDetails;
     const isListed = nftDetails && nftDetails.listing_price;
     const nftOwner = nftDetails && nftDetails.listed_by_wallet;
     const isUserOwner = nftOwner === address;
 
     const onWithdrawNft = async () => {
         await withdrawNft(nftDetails);
+    };
+
+    const onBuyNft = async () => {
+        await buyNft(nftDetails);
     };
 
     useEffect(() => {
@@ -55,6 +62,7 @@ const NftDetail = () => {
                     nft={nftDetails}
                     imageSrc={nftDetails?.url}
                     logoSrc="https://i.pinimg.com/280x280_RS/81/a7/ce/81a7ce9d3bc250bd44fae2b7f188c685.jpg"
+                    onBuyClick={isListed && isListedByOtherUser ? onBuyNft : undefined}
                 >
                     {!isListed && <ListNftInput collection={collection} nft={nftDetails} />}
                     {isListed && isUserOwner && (

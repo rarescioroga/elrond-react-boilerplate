@@ -26,6 +26,16 @@ export const routes = [
         authenticatedRoute: false,
     },
     {
+        path: '/collection/:collectionId/nft/:nftId',
+        component: NftDetail,
+        authenticatedRoute: true,
+    },
+    {
+        path: '/collection/:collectionId/nft/:nftId/listed',
+        component: NftDetail,
+        authenticatedRoute: true,
+    },
+    {
         path: '/my-collections/:collectionId/nft/:nftId',
         component: NftDetail,
         authenticatedRoute: true,
