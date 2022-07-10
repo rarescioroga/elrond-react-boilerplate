@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { CollectionDescriptionContainer } from '@haos-labs/tesserae-utils';
+import { ActionItemButton, NftDetail as NftDetailContainer } from '@haos-labs/tesserae-utils';
+import { useGetAccountInfo } from '@elrondnetwork/dapp-core/hooks/account';
+import { useLocation, useParams, useSearchParams } from 'react-router-dom';
 
-import { BaseFlexRow, ScreenWrapper } from '../../common/styles';
-import { useParams } from 'react-router-dom';
 import useCollections from '../../common/redux/hooks/useCollections';
-import { getCollectionImageSrc } from '../../utils';
 import useNft from '../../common/redux/hooks/useNft';
 import ListNftInput from './components/ListNftInput';
+import useTransactions from '../../common/redux/hooks/useTransactions';
+import useShop from '../../common/redux/hooks/useShop';
+import { ScreenWrapper } from '../../common/styles';
 
 const Container = styled(ScreenWrapper)`
     display: flex;
@@ -19,29 +21,28 @@ const Container = styled(ScreenWrapper)`
     margin-top: 70px;
 `;
 
-const Image = styled.img`
-    width: 100%;
-    border-radius: 10px;
-    object-fit: cover;
-`;
-
-const LeftContent = styled.div`
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    margin-right: 25px;
-`;
-
-const RightContent = styled(LeftContent)`
-    flex: 2.43;
-    margin-right: 20px;
-`;
-
 const NftDetail = () => {
+    const { pathname } = useLocation();
+    const { address } = useGetAccountInfo();
     const { collectionId, nftId } = useParams();
     const { getCollectionById, allCollections } = useCollections();
-    const { myNfts, nftDetails } = useNft(collectionId || '', nftId);
+    const { myNftDetails, listedNftDetails } = useNft(collectionId || '', nftId);
+    const { withdrawNft, buyNft } = useTransactions();
     const [collection, setCollection] = useState<any>(null);
+    const { shopTheme } = useShop(collection?.shop_name);
+    const isListedByOtherUser = pathname.includes('/listed');
+    const nftDetails = isListedByOtherUser ? listedNftDetails : myNftDetails;
+    const isListed = nftDetails && nftDetails.listing_price;
+    const nftOwner = nftDetails && nftDetails.listed_by_wallet;
+    const isUserOwner = nftOwner === address;
+
+    const onWithdrawNft = async () => {
+        await withdrawNft(nftDetails);
+    };
+
+    const onBuyNft = async () => {
+        await buyNft(nftDetails);
+    };
 
     useEffect(() => {
         if (collectionId) {
@@ -49,29 +50,32 @@ const NftDetail = () => {
         }
     }, [collectionId, allCollections]);
 
-    if (!collection) {
+    if (!collection || !nftDetails) {
         return null;
     }
 
     return (
         <ScreenWrapper>
             <Container>
-                <BaseFlexRow>
-                    <LeftContent>
-                        <Image src={nftDetails?.url} />
-                    </LeftContent>
-                    <RightContent>
-                        <CollectionDescriptionContainer
-                            title={collection.token_name}
-                            subtitle={`By ${collection.shop_name}`}
-                            detailsTitle="Benefits"
-                            details={collection.description}
-                            logoSrc="https://i.pinimg.com/280x280_RS/81/a7/ce/81a7ce9d3bc250bd44fae2b7f188c685.jpg"
-                        >
-                            <ListNftInput collection={collection} nft={nftDetails} />
-                        </CollectionDescriptionContainer>
-                    </RightContent>
-                </BaseFlexRow>
+                <NftDetailContainer
+                    collection={collection}
+                    nft={nftDetails}
+                    imageSrc={nftDetails?.url}
+                    logoSrc="https://i.pinimg.com/280x280_RS/81/a7/ce/81a7ce9d3bc250bd44fae2b7f188c685.jpg"
+                    onBuyClick={isListed && isListedByOtherUser ? onBuyNft : undefined}
+                >
+                    {!isListed && <ListNftInput collection={collection} nft={nftDetails} />}
+                    {isListed && isUserOwner && (
+                        <ActionItemButton
+                            label="Listing Price"
+                            price={Number(nftDetails.listing_price)}
+                            buttonLabel="Cancel Listing"
+                            onClick={onWithdrawNft}
+                            wrapperStyle={{ marginTop: 40 }}
+                            theme={shopTheme}
+                        />
+                    )}
+                </NftDetailContainer>
             </Container>
         </ScreenWrapper>
     );

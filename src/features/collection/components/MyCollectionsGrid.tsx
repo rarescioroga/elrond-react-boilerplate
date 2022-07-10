@@ -2,11 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import {
-    NftCard,
     TitleText,
     SmallRegularText,
     MediumLargeBoldText,
     CollectionPriceContainer,
+    CollectionCard,
 } from '@haos-labs/tesserae-utils';
 
 import { colorTheme } from '../../../constants/colors';
@@ -48,7 +48,7 @@ const MyCollectionsGrid: React.FC<Props> = ({ collections, title, isMyCollection
             <CollectionsRow>
                 {collections.map((collection: any, index: any) => (
                     <div onClick={() => goToCollectionDetails(collection)} key={`live-collection-${index}`}>
-                        <NftCard
+                        <CollectionCard
                             key={`live-collection-${index}`}
                             imageUrl={`https://devnet-media.elrond.com/nfts/asset/${collection.image_base_cid}/1.png`}
                             title={collection.token_name}

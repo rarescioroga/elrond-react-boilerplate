@@ -1,16 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import {
-    NftCard,
     TitleText,
     SmallBoldText,
     SmallRegularText,
     MediumLargeBoldText,
     CollectionPriceContainer,
+    CollectionCard,
 } from '@haos-labs/tesserae-utils';
 
-import { isCollectionFullyMinted } from '../../../utils';
+import { getCollectionImageSrc, isCollectionFullyMinted } from '../../../utils';
 import { colorTheme } from '../../../constants/colors';
 import { LeftContentWrapper, RightContentWrapper, CollectionsGridLayout } from '../../../common/styles/nftStyles';
 
@@ -33,33 +33,29 @@ const FlexRow = styled.div`
 `;
 
 const CollectionsGrid: React.FC<Props> = ({ collections, title }) => {
-    const navigate = useNavigate();
-
-    const goToCollectionDetails = (collection: any) => {
-        navigate('./collection/' + collection.nft_token_id);
-    };
-
     return (
         <Wrapper>
             {title && <TitleText extraCss="margin: 56px 0 49px 0;">{title}</TitleText>}
             <CollectionsGridLayout>
                 {collections.map((collection: any, index: any) => (
-                    <div onClick={() => goToCollectionDetails(collection)} key={`live-collection-${index}`}>
-                        <NftCard
-                            key={`live-collection-${index}`}
-                            imageUrl={`https://devnet-media.elrond.com/nfts/asset/${collection.image_base_cid}/1.png`}
+                    <Link
+                        to={'./collection/' + collection.nft_token_id}
+                        key={`collection-${index}`}
+                        style={{ textDecoration: 'none' }}
+                    >
+                        <CollectionCard
+                            imageUrl={getCollectionImageSrc(collection)}
                             title={collection.token_name}
                             subtitle={`By ${collection.shop_name}`}
                             price={Number(collection.selling_price)}
+                            wrapperStyle={{ marginRight: 26, marginBottom: 26 }}
                             itemsRemaining={
                                 Number(collection.amount_of_tokens_total) - Number(collection.minted_indexes_total)
                             }
                             totalItemsCount={Number(collection.amount_of_tokens_total)}
-                            wrapperStyle={{ marginRight: 26, marginBottom: 26 }}
                             hoverAnimation
-                            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                            //@ts-ignore
                             largerWidth
+                            isLive={!isCollectionFullyMinted(collection)}
                             BottomContent={
                                 isCollectionFullyMinted(collection) && (
                                     <CollectionPriceContainer>
@@ -84,7 +80,7 @@ const CollectionsGrid: React.FC<Props> = ({ collections, title }) => {
                                 )
                             }
                         />
-                    </div>
+                    </Link>
                 ))}
             </CollectionsGridLayout>
         </Wrapper>

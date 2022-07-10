@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import styled from 'styled-components';
 
-import searchIcon from '../../assets/icons/saerch-icon.png';
+import searchIcon from '../../assets/icons/saerch.png';
 import { colorTheme } from '../../constants/colors';
 
 type Props = {

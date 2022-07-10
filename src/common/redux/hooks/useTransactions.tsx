@@ -14,15 +14,25 @@ import {
 } from '@elrondnetwork/erdjs/out';
 import { useGetAccountInfo } from '@elrondnetwork/dapp-core/hooks/account';
 import { sendTransactions } from '@elrondnetwork/dapp-core/services';
+import { useTrackTransactionStatus } from '@elrondnetwork/dapp-core/hooks';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { chainID, smartContractAddress, smartContractImplementationInterface } from '../../../config';
 import haosCardsJson from '../../../assets/haos-cards-sc.abi.json';
+import { chainID, smartContractAddress, smartContractImplementationInterface } from '../../../config';
 import { stringToHex } from '../../../utils';
+import { selectTxSessionId, reFetchData, setTxSessionId } from '../slices/appConfigSlice';
 
 const ONE_EGLD = Math.pow(10, 18);
 
 const useTransactions = () => {
+    const dispatch = useDispatch();
+    const txSessionId = useSelector(selectTxSessionId);
     const { address } = useGetAccountInfo();
+
+    useTrackTransactionStatus({
+        transactionId: txSessionId,
+        onSuccess: () => dispatch(reFetchData()),
+    });
 
     const contract = useMemo(() => {
         return new SmartContract({
@@ -42,7 +52,7 @@ const useTransactions = () => {
     const listNft = async (nft: { identifier: string; nonce: number; collection: string }, price: number) => {
         const { nonce, identifier, collection: collectionId } = nft;
 
-        const interaction = abiRegistryContract.methods.listNft([price * ONE_EGLD, identifier]);
+        const interaction = await abiRegistryContract.methods.listNft([price * ONE_EGLD, identifier]);
         const tx = interaction
             .withSingleESDTNFTTransfer(TokenPayment.nonFungible(collectionId, nonce), new Address(address))
             .withValue(TokenPayment.egldFromAmount(0))
@@ -54,6 +64,7 @@ const useTransactions = () => {
             transactions: tx,
             redirectAfterSign: false,
         });
+        dispatch(setTxSessionId(sessionId));
     };
 
     const buyNft = async (nft: { identifier: string; collection: string; nonce: number; listing_price: string }) => {
@@ -73,6 +84,7 @@ const useTransactions = () => {
             transactions: tx,
             redirectAfterSign: false,
         });
+        dispatch(setTxSessionId(sessionId));
     };
 
     const mintNft = async (collectionName: string, price: number) => {
@@ -92,6 +104,7 @@ const useTransactions = () => {
             },
             redirectAfterSign: false,
         });
+        dispatch(setTxSessionId(sessionId));
     };
 
     const withdrawNft = async (nft: { identifier: string; collection: string }) => {
@@ -106,6 +119,7 @@ const useTransactions = () => {
             transactions: tx,
             redirectAfterSign: false,
         });
+        dispatch(setTxSessionId(sessionId));
     };
 
     return {

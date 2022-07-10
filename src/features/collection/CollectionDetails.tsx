@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import {
     MediumLargeBoldText,
     NftCard,
     SmallRegularText,
     CollectionPriceContainer,
-    ImageAndBenefits,
     MainButton,
+    CollectionBanner,
+    Benefits,
+    ActionItemButton,
 } from '@haos-labs/tesserae-utils';
 
 import useCollections from '../../common/redux/hooks/useCollections';
 import useShop from '../../common/redux/hooks/useShop';
-import { ScreenWrapper } from '../../common/styles';
+import { BaseFlexRow, ScreenWrapper } from '../../common/styles';
 import { getCollectionImageSrc, isCollectionFullyMinted } from '../../utils';
 import { colorTheme } from '../../constants/colors';
 import { CollectionsGridLayout, LeftContentWrapper } from '../../common/styles/nftStyles';
@@ -29,6 +31,10 @@ const Container = styled(ScreenWrapper)`
     margin-top: 70px;
 `;
 
+const MarginTopRow = styled(BaseFlexRow)`
+    margin-top: 25px;
+`;
+
 let theme = {
     primary: colorTheme.ORANGE,
     secondary: colorTheme.WHITE,
@@ -40,7 +46,7 @@ const CollectionDetails: React.FC = () => {
     const { mintNft } = useTransactions();
     const [collection, setCollection] = useState<any>(null);
     const { shopTheme } = useShop(collection?.shop_name);
-    const { nftList } = useNft(collection?.nft_token_id);
+    const { listedNfts, isUserNftOwner } = useNft(collection?.nft_token_id);
     const { buyNft } = useTransactions();
     const isMintDone = collection && isCollectionFullyMinted(collection);
 
@@ -67,17 +73,32 @@ const CollectionDetails: React.FC = () => {
     return (
         <ScreenWrapper>
             <Container>
-                <ImageAndBenefits
-                    imageSrc={getCollectionImageSrc(collection)}
+                <CollectionBanner
                     collection={collection}
-                    theme={theme}
-                    onBuyClick={onMintNft}
+                    bannerSrc={getCollectionImageSrc(collection)}
                     logoSrc="https://i.pinimg.com/280x280_RS/81/a7/ce/81a7ce9d3bc250bd44fae2b7f188c685.jpg"
                 />
-                {isMintDone && nftList && (
+                <MarginTopRow>
+                    <Benefits collection={collection} wrapperStyle={{ marginRight: isMintDone ? 0 : 25 }} />
+                    {!isMintDone && (
+                        <ActionItemButton
+                            label="Item price"
+                            price={collection.price}
+                            onClick={onMintNft}
+                            buttonLabel="Mint Now"
+                            theme={theme}
+                            wrapperStyle={{ width: 390, height: 54 }}
+                        />
+                    )}
+                </MarginTopRow>
+                {isMintDone && listedNfts && (
                     <CollectionsGridLayout style={{ marginTop: 25 }}>
-                        {nftList.map((nft: any, index: any) => {
-                            return (
+                        {listedNfts.filter(isUserNftOwner).map((nft: any, index: number) => (
+                            <Link
+                                to={`./nft/${nft.identifier}/listed`}
+                                key={`listed-nft-${index}`}
+                                style={{ textDecoration: 'none' }}
+                            >
                                 <NftCard
                                     key={`nft-listed-${index}`}
                                     imageUrl={nft.url}
@@ -86,8 +107,6 @@ const CollectionDetails: React.FC = () => {
                                     price={Number(nft.listing_price)}
                                     wrapperStyle={{ marginRight: 26, marginBottom: 26 }}
                                     hoverAnimation
-                                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                                    //@ts-ignore
                                     largerWidth
                                     BottomContent={
                                         <CollectionPriceContainer backgroundColor={theme.secondary}>
@@ -103,8 +122,8 @@ const CollectionDetails: React.FC = () => {
                                         </CollectionPriceContainer>
                                     }
                                 />
-                            );
-                        })}
+                            </Link>
+                        ))}
                     </CollectionsGridLayout>
                 )}
             </Container>

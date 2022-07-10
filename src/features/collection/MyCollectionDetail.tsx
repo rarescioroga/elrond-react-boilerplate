@@ -1,23 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import { ScreenWrapper, BaseFlexRow } from '../../common/styles';
-import { getCollectionImageSrc, isCollectionFullyMinted } from '../../utils';
-import { useNavigate, useParams } from 'react-router-dom';
 import useCollections from '../../common/redux/hooks/useCollections';
 import useNft from '../../common/redux/hooks/useNft';
-import {
-    CollectionPriceContainer,
-    ImageAndBenefits,
-    MainButton,
-    MediumLargeBoldText,
-    NftCard,
-    SmallRegularText,
-} from '@haos-labs/tesserae-utils';
-import { CollectionsGridLayout, LeftContentWrapper } from '../../common/styles/nftStyles';
-import { colorTheme } from '../../constants/colors';
-import useShop from '../../common/redux/hooks/useShop';
-import useTransactions from '../../common/redux/hooks/useTransactions';
+import { ScreenWrapper } from '../../common/styles';
+import { getCollectionImageSrc } from '../../utils';
+import { Link, useParams } from 'react-router-dom';
+import { CollectionBanner, NftCard } from '@haos-labs/tesserae-utils';
+import { CollectionsGridLayout } from '../../common/styles/nftStyles';
 
 const Container = styled(ScreenWrapper)`
     display: flex;
@@ -29,34 +19,11 @@ const Container = styled(ScreenWrapper)`
     margin-top: 70px;
 `;
 
-let theme = {
-    primary: colorTheme.ORANGE,
-    secondary: colorTheme.WHITE,
-};
-
 const MyCollectionDetail: React.FC = () => {
-    const navigate = useNavigate();
     const { collectionId } = useParams();
     const { getCollectionById, allCollections } = useCollections();
     const { myNfts } = useNft(collectionId || '');
     const [collection, setCollection] = useState<any>(null);
-    const { shopTheme } = useShop(collection?.shop_name);
-    const { withdrawNft, mintNft } = useTransactions();
-    const isCollectionMinted = collection ? isCollectionFullyMinted(collection) : false;
-
-    if (shopTheme) {
-        theme = shopTheme;
-    }
-
-    const goToMyNftDetailScreen = (nftId: string) => {
-        navigate(`./nft/${nftId}`);
-    };
-
-    const onMintNft = async () => {
-        if (collection) {
-            await mintNft(collection.token_name, Number(collection.selling_price));
-        }
-    };
 
     useEffect(() => {
         if (collectionId) {
@@ -67,67 +34,34 @@ const MyCollectionDetail: React.FC = () => {
     if (!collection) {
         return null;
     }
+    console.log('LOGGER myNfts', myNfts);
 
     return (
         <ScreenWrapper>
             <Container>
-                <ImageAndBenefits
-                    imageSrc={getCollectionImageSrc(collection)}
+                <CollectionBanner
                     collection={collection}
-                    theme={theme}
+                    bannerSrc={getCollectionImageSrc(collection)}
                     logoSrc="https://i.pinimg.com/280x280_RS/81/a7/ce/81a7ce9d3bc250bd44fae2b7f188c685.jpg"
-                    onBuyClick={onMintNft}
                 />
                 <CollectionsGridLayout style={{ marginTop: 25 }}>
                     {myNfts.map((nft: any, index: any) => (
-                        <NftCard
-                            key={`nft-listed-${index}`}
-                            imageUrl={nft.url}
-                            title={nft.name}
-                            subtitle={`By ${collection.shop_name}`}
-                            price={Number(nft.listing_price)}
-                            wrapperStyle={{ marginRight: 26, marginBottom: 26 }}
-                            hoverAnimation
-                            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                            //@ts-ignore
-                            largerWidth
-                            BottomContent={
-                                <CollectionPriceContainer backgroundColor={theme.secondary}>
-                                    {!nft.listing_price && (
-                                        <>
-                                            <LeftContentWrapper>
-                                                <SmallRegularText color={theme.primary}>Owner</SmallRegularText>
-                                                <MediumLargeBoldText color={theme.primary}>
-                                                    Verified
-                                                </MediumLargeBoldText>
-                                            </LeftContentWrapper>
-                                            {isCollectionMinted && (
-                                                <MainButton
-                                                    theme={theme}
-                                                    onClick={() => goToMyNftDetailScreen(nft.identifier)}
-                                                >
-                                                    List now
-                                                </MainButton>
-                                            )}
-                                        </>
-                                    )}
-
-                                    {nft.listing_price && (
-                                        <>
-                                            <LeftContentWrapper>
-                                                <SmallRegularText color={theme.primary}>Listed at</SmallRegularText>
-                                                <MediumLargeBoldText color={theme.primary}>
-                                                    {Number(nft.listing_price)} EGLD
-                                                </MediumLargeBoldText>
-                                            </LeftContentWrapper>
-                                            <MainButton theme={theme} onClick={() => withdrawNft(nft)}>
-                                                Withdraw
-                                            </MainButton>
-                                        </>
-                                    )}
-                                </CollectionPriceContainer>
-                            }
-                        />
+                        <Link
+                            to={`./nft/${nft.identifier}`}
+                            key={`live-collection-${index}`}
+                            style={{ textDecoration: 'none' }}
+                        >
+                            <NftCard
+                                key={`nft-listed-${index}`}
+                                imageUrl={nft.url}
+                                title={nft.name}
+                                subtitle={`By ${collection.shop_name}`}
+                                price={Number(nft.listing_price)}
+                                wrapperStyle={{ marginRight: 26, marginBottom: 26 }}
+                                hoverAnimation
+                                largerWidth
+                            />
+                        </Link>
                     ))}
                 </CollectionsGridLayout>
             </Container>
