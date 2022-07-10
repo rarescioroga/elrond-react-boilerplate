@@ -1,4 +1,4 @@
-import React, { BaseSyntheticEvent, SyntheticEvent, useState } from 'react';
+import React, { BaseSyntheticEvent, useState } from 'react';
 import styled from 'styled-components';
 import { colorTheme } from '../../../constants/colors';
 import useShop from '../../../common/redux/hooks/useShop';

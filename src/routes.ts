@@ -48,6 +48,7 @@ export const routeNames = {
     myCollectionsDetail: '/my-collections/:collectionId',
     collectionDetail: '/collection/:collectionId',
     myNftDetail: '/my-collections/:collectionId/nft/:nftId',
+    unlock: '/unlock',
     walletconnect: '/walletconnect',
 };
 

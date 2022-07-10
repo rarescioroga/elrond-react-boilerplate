@@ -26,7 +26,7 @@ const App = () => {
                     environment={environment}
                     customNetworkConfig={{ name: 'customConfig', apiTimeout: 6000 }}
                 >
-                    <AuthenticatedRoutesWrapper routes={routes} unlockRoute={routeNames.home}>
+                    <AuthenticatedRoutesWrapper routes={routes} unlockRoute={routeNames.unlock}>
                         <ScreenWrapper>
                             <TransactionsToastList />
                             <NotificationModal />

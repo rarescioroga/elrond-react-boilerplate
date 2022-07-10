@@ -18,7 +18,7 @@ const useNft = (collectionId: string, nftId?: string) => {
     const listedNftDetails = useSelector((state) => selectListedNftById(state, nftId));
 
     const { isSuccess: isListedNftsFetchSuccess, data: listedNftsData } = useQuery(
-        ['listedNftsData', collectionId],
+        ['listedNftsData', collectionId, reFetchData],
         () => getListedNfts(collectionId),
     );
 

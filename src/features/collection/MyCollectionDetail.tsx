@@ -1,23 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
 
 import useCollections from '../../common/redux/hooks/useCollections';
 import useNft from '../../common/redux/hooks/useNft';
-import { ScreenWrapper } from '../../common/styles';
+import { CollectionOrNftDetailContainer, ScreenWrapper } from '../../common/styles';
 import { getCollectionImageSrc } from '../../utils';
 import { Link, useParams } from 'react-router-dom';
 import { CollectionBanner, NftCard } from '@haos-labs/tesserae-utils';
 import { CollectionsGridLayout } from '../../common/styles/nftStyles';
-
-const Container = styled(ScreenWrapper)`
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    align-items: flex-start;
-    max-width: 1227px;
-    width: 100%;
-    margin-top: 70px;
-`;
 
 const MyCollectionDetail: React.FC = () => {
     const { collectionId } = useParams();
@@ -34,11 +23,10 @@ const MyCollectionDetail: React.FC = () => {
     if (!collection) {
         return null;
     }
-    console.log('LOGGER myNfts', myNfts);
 
     return (
         <ScreenWrapper>
-            <Container>
+            <CollectionOrNftDetailContainer>
                 <CollectionBanner
                     collection={collection}
                     bannerSrc={getCollectionImageSrc(collection)}
@@ -64,7 +52,7 @@ const MyCollectionDetail: React.FC = () => {
                         </Link>
                     ))}
                 </CollectionsGridLayout>
-            </Container>
+            </CollectionOrNftDetailContainer>
         </ScreenWrapper>
     );
 };
