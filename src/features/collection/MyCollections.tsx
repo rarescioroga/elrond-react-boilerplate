@@ -5,11 +5,11 @@ import MyCollectionsGrid from './components/MyCollectionsGrid';
 import useCollections from '../../common/redux/hooks/useCollections';
 import { MediumRegularText } from '@haos-labs/tesserae-utils';
 import { colorTheme } from '../../constants/colors';
-import { ScreenWrapper } from '../../common/styles';
+import { MAIN_COLUMN_WIDTH, ScreenWrapper } from '../../common/styles';
 
 const MainContentWrapper = styled.div`
     width: calc(100% - 300px);
-    max-width: 1227px;
+    max-width: ${MAIN_COLUMN_WIDTH}px;
     margin: 39px 32px;
 `;
 

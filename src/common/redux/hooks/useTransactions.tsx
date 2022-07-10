@@ -2,7 +2,6 @@ import { useMemo } from 'react';
 import {
     AbiRegistry,
     Address,
-    BigUIntType,
     BytesValue,
     ContractFunction,
     SmartContract,
@@ -22,9 +21,6 @@ import haosCardsJson from '../../../assets/haos-cards-sc.abi.json';
 import { chainID, smartContractAddress, smartContractImplementationInterface } from '../../../config';
 import { stringToHex } from '../../../utils';
 import { selectTxSessionId, reFetchData, setTxSessionId } from '../slices/appConfigSlice';
-import { MaxUint64AsBigNumber } from '@elrondnetwork/erdjs-network-providers/out/constants';
-
-const ONE_EGLD = Math.pow(10, 18);
 
 const useTransactions = () => {
     const dispatch = useDispatch();

@@ -14,22 +14,12 @@ import {
 
 import useCollections from '../../common/redux/hooks/useCollections';
 import useShop from '../../common/redux/hooks/useShop';
-import { BaseFlexRow, ScreenWrapper } from '../../common/styles';
+import { BaseFlexRow, ScreenWrapper, CollectionOrNftDetailContainer } from '../../common/styles';
 import { getCollectionImageSrc, isCollectionFullyMinted } from '../../utils';
 import { colorTheme } from '../../constants/colors';
 import { CollectionsGridLayout, LeftContentWrapper } from '../../common/styles/nftStyles';
 import useNft from '../../common/redux/hooks/useNft';
 import useTransactions from '../../common/redux/hooks/useTransactions';
-
-const Container = styled(ScreenWrapper)`
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    align-items: flex-start;
-    max-width: 1227px;
-    width: 100%;
-    margin-top: 70px;
-`;
 
 const MarginTopRow = styled(BaseFlexRow)`
     margin-top: 25px;
@@ -72,7 +62,7 @@ const CollectionDetails: React.FC = () => {
 
     return (
         <ScreenWrapper>
-            <Container>
+            <CollectionOrNftDetailContainer>
                 <CollectionBanner
                     collection={collection}
                     bannerSrc={getCollectionImageSrc(collection)}
@@ -126,7 +116,7 @@ const CollectionDetails: React.FC = () => {
                         ))}
                     </CollectionsGridLayout>
                 )}
-            </Container>
+            </CollectionOrNftDetailContainer>
         </ScreenWrapper>
     );
 };

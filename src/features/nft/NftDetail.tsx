@@ -1,25 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
 import { ActionItemButton, NftDetail as NftDetailContainer } from '@haos-labs/tesserae-utils';
 import { useGetAccountInfo } from '@elrondnetwork/dapp-core/hooks/account';
-import { useLocation, useParams, useSearchParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
 import useCollections from '../../common/redux/hooks/useCollections';
 import useNft from '../../common/redux/hooks/useNft';
 import ListNftInput from './components/ListNftInput';
 import useTransactions from '../../common/redux/hooks/useTransactions';
 import useShop from '../../common/redux/hooks/useShop';
-import { ScreenWrapper } from '../../common/styles';
-
-const Container = styled(ScreenWrapper)`
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    align-items: flex-start;
-    max-width: 1227px;
-    width: 100%;
-    margin-top: 70px;
-`;
+import { ScreenWrapper, CollectionOrNftDetailContainer } from '../../common/styles';
 
 const NftDetail = () => {
     const { pathname } = useLocation();
@@ -56,7 +45,7 @@ const NftDetail = () => {
 
     return (
         <ScreenWrapper>
-            <Container>
+            <CollectionOrNftDetailContainer>
                 <NftDetailContainer
                     collection={collection}
                     nft={nftDetails}
@@ -76,7 +65,7 @@ const NftDetail = () => {
                         />
                     )}
                 </NftDetailContainer>
-            </Container>
+            </CollectionOrNftDetailContainer>
         </ScreenWrapper>
     );
 };
