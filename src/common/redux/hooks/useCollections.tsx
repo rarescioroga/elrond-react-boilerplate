@@ -7,6 +7,7 @@ import { getAvailableCollections, getLiveCollections, getWalletCollections } fro
 import { selectLiveCollections, setLiveCollections } from '../slices/liveCollectionsSlice';
 import { selectAvailableCollections, setAvailableCollections } from '../slices/availableCollectionsSlice';
 import { selectMyCollections, setMyCollections } from '../slices/myCollectionSlice';
+import { selectReFetchData } from '../slices/appConfigSlice';
 import useSearchFilter from './useSearchFilter';
 
 const useCollections = () => {
@@ -16,6 +17,7 @@ const useCollections = () => {
     const liveCollections = useSelector(selectLiveCollections);
     const availableCollections = useSelector(selectAvailableCollections);
     const myCollections = useSelector(selectMyCollections);
+    const reFetchData = useSelector(selectReFetchData);
     const allCollections = [...liveCollections, ...availableCollections];
     const allFilteredCollections = allCollections.filter(
         (collection) =>
@@ -24,15 +26,16 @@ const useCollections = () => {
     );
 
     const { isSuccess: isLiveCollectionsFetchSuccess, data: liveCollectionsData } = useQuery(
-        'liveCollections',
+        ['liveCollections', reFetchData],
         getLiveCollections,
     );
     const { isSuccess: isAvailableCollectionsFetchSuccess, data: availableCollectionsData } = useQuery(
-        'availableCollections',
+        ['availableCollections', reFetchData],
         getAvailableCollections,
     );
-    const { isSuccess: isMyCollectionsFetchSuccess, data: myCollectionsData } = useQuery('myCollections', () =>
-        getWalletCollections(address),
+    const { isSuccess: isMyCollectionsFetchSuccess, data: myCollectionsData } = useQuery(
+        ['myCollections', reFetchData],
+        () => getWalletCollections(address),
     );
 
     const getCollectionById = (id: string) => allCollections.find((collection) => collection.nft_token_id === id);

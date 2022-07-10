@@ -34,7 +34,6 @@ const MyCollectionDetail: React.FC = () => {
     if (!collection) {
         return null;
     }
-    console.log('LOGGER myNfts', myNfts);
 
     return (
         <ScreenWrapper>
