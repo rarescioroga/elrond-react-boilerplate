@@ -12,14 +12,15 @@ import {
     ActionItemButton,
 } from '@haos-labs/tesserae-utils';
 
+import anonymousLogo from '../../assets/anonymous-logo.png';
 import useCollections from '../../common/redux/hooks/useCollections';
 import useShop from '../../common/redux/hooks/useShop';
+import useNft from '../../common/redux/hooks/useNft';
+import useTransactions from '../../common/redux/hooks/useTransactions';
 import { BaseFlexRow, ScreenWrapper, CollectionOrNftDetailContainer } from '../../common/styles';
 import { getCollectionImageSrc, isCollectionFullyMinted } from '../../utils';
 import { colorTheme } from '../../constants/colors';
 import { CollectionsGridLayout, LeftContentWrapper } from '../../common/styles/nftStyles';
-import useNft from '../../common/redux/hooks/useNft';
-import useTransactions from '../../common/redux/hooks/useTransactions';
 
 const MarginTopRow = styled(BaseFlexRow)`
     margin-top: 25px;
@@ -66,14 +67,14 @@ const CollectionDetails: React.FC = () => {
                 <CollectionBanner
                     collection={collection}
                     bannerSrc={getCollectionImageSrc(collection)}
-                    logoSrc="https://i.pinimg.com/280x280_RS/81/a7/ce/81a7ce9d3bc250bd44fae2b7f188c685.jpg"
+                    logoSrc={anonymousLogo}
                 />
                 <MarginTopRow>
                     <Benefits collection={collection} wrapperStyle={{ marginRight: isMintDone ? 0 : 25 }} />
                     {!isMintDone && (
                         <ActionItemButton
                             label="Item price"
-                            price={collection.price}
+                            price={Number(collection.selling_price)}
                             onClick={onMintNft}
                             buttonLabel="Mint Now"
                             theme={theme}

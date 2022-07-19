@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
+import anonymousLogo from '../../assets/anonymous-logo.png';
 import useCollections from '../../common/redux/hooks/useCollections';
 import useNft from '../../common/redux/hooks/useNft';
 import { CollectionOrNftDetailContainer, ScreenWrapper } from '../../common/styles';
@@ -30,7 +31,7 @@ const MyCollectionDetail: React.FC = () => {
                 <CollectionBanner
                     collection={collection}
                     bannerSrc={getCollectionImageSrc(collection)}
-                    logoSrc="https://i.pinimg.com/280x280_RS/81/a7/ce/81a7ce9d3bc250bd44fae2b7f188c685.jpg"
+                    logoSrc={anonymousLogo}
                 />
                 <CollectionsGridLayout style={{ marginTop: 25 }}>
                     {myNfts.map((nft: any, index: any) => (

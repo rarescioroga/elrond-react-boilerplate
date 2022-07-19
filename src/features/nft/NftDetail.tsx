@@ -3,6 +3,7 @@ import { ActionItemButton, NftDetail as NftDetailContainer } from '@haos-labs/te
 import { useGetAccountInfo } from '@elrondnetwork/dapp-core/hooks/account';
 import { useLocation, useParams } from 'react-router-dom';
 
+import anonymousLogo from '../../assets/anonymous-logo.png';
 import useCollections from '../../common/redux/hooks/useCollections';
 import useNft from '../../common/redux/hooks/useNft';
 import ListNftInput from './components/ListNftInput';
@@ -19,8 +20,8 @@ const NftDetail = () => {
     const { withdrawNft, buyNft } = useTransactions();
     const [collection, setCollection] = useState<any>(null);
     const { shopTheme } = useShop(collection?.shop_name);
-    const isListedByOtherUser = pathname.includes('/listed');
-    const nftDetails = isListedByOtherUser ? listedNftDetails : myNftDetails;
+    const isListedPath = pathname.includes('/listed');
+    const nftDetails = isListedPath ? listedNftDetails : myNftDetails;
     const isListed = nftDetails && nftDetails.listing_price;
     const nftOwner = nftDetails && nftDetails.listed_by_wallet;
     const isUserOwner = nftOwner === address;
@@ -50,8 +51,8 @@ const NftDetail = () => {
                     collection={collection}
                     nft={nftDetails}
                     imageSrc={nftDetails?.url}
-                    logoSrc="https://i.pinimg.com/280x280_RS/81/a7/ce/81a7ce9d3bc250bd44fae2b7f188c685.jpg"
-                    onBuyClick={isListed && isListedByOtherUser ? onBuyNft : undefined}
+                    logoSrc={anonymousLogo}
+                    onBuyClick={isListed && isListedPath && !isUserOwner ? onBuyNft : undefined}
                 >
                     {!isListed && <ListNftInput collection={collection} nft={nftDetails} />}
                     {isListed && isUserOwner && (

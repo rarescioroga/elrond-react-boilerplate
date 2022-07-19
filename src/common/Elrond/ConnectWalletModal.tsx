@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { MainButton, MediumLargeRegularText } from '@haos-labs/tesserae-utils';
 import { useExtensionLogin, useWalletConnectLogin } from '@elrondnetwork/dapp-core/hooks/login';
+import { WalletConnectLoginButton } from '@elrondnetwork/dapp-core/UI';
 
 import iconLogo from '../../assets/icons/icon.png';
 import { Theme } from '../models';
@@ -82,6 +83,7 @@ const ConnectWalletModal: React.FC<Props> = ({ theme, open, onClose }) => {
             <MainButton onClick={handleMaiarLogin} theme={theme} extraStyle={{ marginTop: 51 }}>
                 Connect via maiar
             </MainButton>
+            <WalletConnectLoginButton />
         </Wrapper>
     );
 };

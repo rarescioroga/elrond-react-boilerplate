@@ -7,6 +7,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import SearchBarHeader from './common/SearchBarHeader';
 import { routeNames, routes } from './routes';
 import { HeaderWrapper, ScreenWrapper, ComponentsWrapper } from './common/styles';
+import './index.css';
 
 const environment = process.env.REACT_APP_ENVIRONMENT;
 
@@ -28,7 +29,7 @@ const App = () => {
                 >
                     <AuthenticatedRoutesWrapper routes={routes} unlockRoute={routeNames.unlock}>
                         <ScreenWrapper>
-                            <TransactionsToastList />
+                            <TransactionsToastList successfulToastLifetime={5000} />
                             <NotificationModal />
                             <SignTransactionsModals />
                             <HeaderWrapper>
