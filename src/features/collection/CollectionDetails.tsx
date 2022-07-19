@@ -84,7 +84,7 @@ const CollectionDetails: React.FC = () => {
                 </MarginTopRow>
                 {isMintDone && listedNfts && (
                     <CollectionsGridLayout style={{ marginTop: 25 }}>
-                        {listedNfts.filter(isUserNftOwner).map((nft: any, index: number) => (
+                        {listedNfts.map((nft: any, index: number) => (
                             <Link
                                 to={`./nft/${nft.identifier}/listed`}
                                 key={`listed-nft-${index}`}
@@ -99,6 +99,7 @@ const CollectionDetails: React.FC = () => {
                                     wrapperStyle={{ marginRight: 26, marginBottom: 26 }}
                                     hoverAnimation
                                     largerWidth
+                                    isOwner={isUserNftOwner(nft)}
                                     BottomContent={
                                         <CollectionPriceContainer backgroundColor={theme.secondary}>
                                             <LeftContentWrapper>
