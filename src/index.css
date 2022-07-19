@@ -56,3 +56,6 @@ input[type="number"] {
   border: 2px solid #aaa;
 }
 
+.transaction-toast {
+  font-family: RedHatMono-Regular !important;
+}
