@@ -4,9 +4,8 @@ import { DappProvider, AuthenticatedRoutesWrapper } from '@elrondnetwork/dapp-co
 import { TransactionsToastList, SignTransactionsModals, NotificationModal } from '@elrondnetwork/dapp-core/UI';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
-import SearchBarHeader from './common/SearchBarHeader';
 import { routeNames, routes } from './routes';
-import { HeaderWrapper, ScreenWrapper, ComponentsWrapper } from './common/styles';
+import { ScreenWrapper } from './common/styles';
 import './index.css';
 
 const environment = process.env.REACT_APP_ENVIRONMENT;
@@ -32,20 +31,11 @@ const App = () => {
                             <TransactionsToastList successfulToastLifetime={5000} />
                             <NotificationModal />
                             <SignTransactionsModals />
-                            <HeaderWrapper>
-                                <SearchBarHeader />
-                            </HeaderWrapper>
-                            <ComponentsWrapper>
-                                <Routes>
-                                    {routes.map((route: any, index: number) => (
-                                        <Route
-                                            path={route.path}
-                                            key={'route-key-' + index}
-                                            element={<route.component />}
-                                        />
-                                    ))}
-                                </Routes>
-                            </ComponentsWrapper>
+                            <Routes>
+                                {routes.map((route: any, index: number) => (
+                                    <Route path={route.path} key={'route-key-' + index} element={<route.component />} />
+                                ))}
+                            </Routes>
                         </ScreenWrapper>
                     </AuthenticatedRoutesWrapper>
                 </DappProvider>
